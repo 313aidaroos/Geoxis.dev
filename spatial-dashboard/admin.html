@@ -16,7 +16,7 @@
         <h1 class="text-2xl font-semibold">Support queue</h1>
         <p class="mt-1 text-sm text-slate-400">Owner/admin only. awad@apixis.dev and alaidaroosawad@gmail.com are the owner accounts.</p>
       </div>
-      <a href="/login.html" class="rounded-md border border-line px-3 py-2 text-sm">Login</a>
+      <a href="/login" class="rounded-md border border-line px-3 py-2 text-sm">Login</a>
     </div>
     <p id="status" class="mt-5 text-sm text-slate-400">Checking session…</p>
     <div id="tickets" class="mt-5 grid gap-3"></div>
@@ -32,7 +32,7 @@
     const tickets = document.getElementById("tickets");
     const me = await loadMe().catch(() => null);
     if (!me) {
-      status.innerHTML = 'Not signed in. <a class="text-emerald-300" href="/login.html">Send a magic link</a>.';
+      status.innerHTML = 'Not signed in. <a class="text-emerald-300" href="/login">Send a magic link</a>.';
     } else if (!me.admin) {
       status.textContent = `Signed in as ${me.user.email}; owner/admin access required.`;
     } else {
