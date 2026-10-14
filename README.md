@@ -14,4 +14,4 @@ No keys required for the default globe and the live feed. A Google Map Tiles key
 
 Your own fleet: sign in, create an ingest key, and post positions to `POST /api/positions`. See [`spatial-dashboard/docs/INGEST.md`](spatial-dashboard/docs/INGEST.md).
 
-The other files at the repo root (`index.html`, `main.js`, `*Controller.js`, `streamSimulator.js`, `README-2.md`) are the old "Meridian" prototype. They are not deployed and can be deleted.
+The old "Meridian" prototype was removed in #31. The app lives in `spatial-dashboard/`.
