@@ -22,6 +22,17 @@ test("per-thing plan is a subscription with min 3 and product=geoxis", () => {
   assert.equal(rep.fields["payment_intent_data[metadata][sku]"], "geoxis.export.report");
 });
 
+test("package checkout is a one-time payment for the tracking number", () => {
+  const pkgEnv = { ...env, STRIPE_PRICE_GEOXIS_PACKAGE: "price_p" };
+  const r = checkoutParams({ sku: "geoxis.track.package", userId: "u", tenantId: "t", trackingNumber: "1Z999", appUrl: "https://a" }, pkgEnv);
+  assert.equal(r.ok, true);
+  assert.equal(r.fields.mode, "payment");
+  assert.equal(r.fields["line_items[0][price]"], "price_p");
+  assert.equal(r.fields["line_items[0][quantity]"], "1");
+  assert.equal(r.fields["metadata[sku]"], "geoxis.track.package");
+  assert.equal(r.fields["metadata[tracking_number]"], "1Z999");
+});
+
 test("webhook signature verification", () => {
   const body = '{"a":1}', t = 1000;
   const sig = crypto.createHmac("sha256", "w").update(`${t}.${body}`).digest("hex");
