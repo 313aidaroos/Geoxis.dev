@@ -175,3 +175,29 @@ mountPageHelp({
     "For 200 or more things, use the sales form. It emails awad@apixis.dev.",
   ],
 });
+
+// 2026-10-14 (Geoxis Lead / Grok): card checkout. Buttons stay disabled until /api/checkout reports Stripe is set up.
+(async () => {
+  const buttons = [...document.querySelectorAll("[data-card-sku]")];
+  if (!buttons.length) return;
+  const status = await fetch("/api/checkout").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  if (!status?.enabled) return;
+  for (const btn of buttons) {
+    const sku = btn.dataset.cardSku;
+    if (!status.skus?.[sku]) continue;
+    btn.disabled = false;
+    btn.classList.remove("text-slate-500", "cursor-not-allowed");
+    btn.classList.add("text-slate-200", "hover:bg-surface-2");
+    btn.addEventListener("click", async () => {
+      const qty = Number(document.getElementById("objectCount")?.value || 1);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", ...authHeader() },
+        body: JSON.stringify({ sku, quantity: qty }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) window.location.href = data.url;
+      else alert(data.message || "Card checkout could not start. Nothing was charged.");
+    });
+  }
+})();

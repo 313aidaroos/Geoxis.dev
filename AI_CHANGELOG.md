@@ -107,4 +107,5 @@ Entry format:
 ## 2026-10-06 — Claude (family lead): AI Receptionist notes (D18)
 - Changed: AI Receptionist section in the family notes (see `docs/AI_RECEPTIONIST.md` in ApixisWallet); notes only, no code.
 - Why: Awad approved an AI Receptionist add-on at $100/month for every customer-facing family site and asked every bot and agent to follow one plan.
+## 2026-10-14 — Geoxis Lead (Grok): Stripe card checkout draft (api/checkout, api/stripe-webhook, sql/006 unapplied), inert without env. Undo: revert the PR.
 ## 2026-10-14 — Geoxis Lead (Grok): launch polish (config owners, draft terms/privacy, robots/sitemap, meta tags, README). Undo: revert the PR.
