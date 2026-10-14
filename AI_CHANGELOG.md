@@ -108,7 +108,6 @@ Entry format:
 - Changed: AI Receptionist section in the family notes (see `docs/AI_RECEPTIONIST.md` in ApixisWallet); notes only, no code.
 - Why: Awad approved an AI Receptionist add-on at $100/month for every customer-facing family site and asked every bot and agent to follow one plan.
 ## 2026-10-14 — Geoxis Lead (Grok): Stripe card checkout draft (api/checkout, api/stripe-webhook, sql/006 unapplied), inert without env. Undo: revert the PR.
-
 ## 2026-10-14 — Geoxis Lead (Grok) via cloud agent
 - Changed: `/track` pay panel offers "Pay by card · $1" via the existing package checkout SKU, disabled until Stripe env is set. Phone layout in `src/styles.css` stacks the globe sidebar above the map so the stats bar no longer covers the header. New `GET /api/health` (`lib/health.js`, `api/health.js`) returns booleans only, plus a test. Cixy persona text was not changed.
 - Why: launch-next draft for Awad, built on the Stripe checkout branch. Undo: revert this PR.
