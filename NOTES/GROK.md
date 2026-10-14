@@ -325,3 +325,8 @@ Recorded by Grok (Developer Bot, notes and status sync at 12:25 AM CT on Oct 5).
 - What: `lib/stripe.js` (price ids from env `STRIPE_PRICE_GEOXIS_OBJECT_MONTHLY`, `STRIPE_PRICE_GEOXIS_REPORT`, `STRIPE_PRICE_GEOXIS_PACKAGE`; metadata product=geoxis + sku + user/tenant; HMAC signature check), `api/checkout.js` (GET status, POST Checkout Session: subscription for per-thing, payment for report/package), `api/stripe-webhook.js` (verified; writes `geoxis_payments` ledger + entitlement, idempotent), `sql/006_stripe_payments.sql` (NOT applied), pricing page "Pay by card" buttons enabled only when env is set. Tests in `test/stripe.test.mjs`.
 - Inert until Awad sets `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and the price env names, creates the prices, applies sql/006, and points a Stripe webhook (checkout.session.completed, invoice.paid) at `/api/stripe-webhook`.
 - Who: Geoxis Lead (Grok). Undo: revert the PR; `drop table public.geoxis_payments` if 006 was applied.
+
+## 2026-10-14 — Geoxis Lead (Grok): launch polish (branch `geoxis-lead/launch-polish`)
+- What: `/api/config` adds `ownerEmails` (both master admins; `ownerEmail` kept for old clients). Draft `terms.html` + `privacy.html` (in theme, `noindex`, marked draft for Awad), added to `vite.config.js` inputs. `public/robots.txt` + `public/sitemap.xml`. Meta description/OG tags on index, pricing, track. README Meridian line fixed.
+- Who: Geoxis Lead (Grok). Theme unchanged, no SVGs.
+- Undo: revert the PR's squash commit.
