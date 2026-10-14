@@ -112,3 +112,5 @@ Entry format:
 ## 2026-10-14 — Geoxis Lead (Grok) via cloud agent
 - Changed: `/track` pay panel offers "Pay by card · $1" via the existing package checkout SKU, disabled until Stripe env is set. Phone layout in `src/styles.css` stacks the globe sidebar above the map so the stats bar no longer covers the header. New `GET /api/health` (`lib/health.js`, `api/health.js`) returns booleans only, plus a test. Cixy persona text was not changed.
 - Why: launch-next draft for Awad, built on the Stripe checkout branch. Undo: revert this PR.
+
+## 2026-10-14 — Geoxis Lead (Grok): launch polish (config owners, draft terms/privacy, robots/sitemap, meta tags, README). Undo: revert the PR.

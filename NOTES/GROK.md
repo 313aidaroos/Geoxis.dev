@@ -331,3 +331,8 @@ Recorded by Grok (Developer Bot, notes and status sync at 12:25 AM CT on Oct 5).
 - What: After the 3 free package lookups, `/track` offers "Pay by card · $1" beside Pay 100 Ixis. The button uses the existing `POST /api/checkout` one-time package path (`geoxis.track.package`) and stays disabled, with "Card checkout is not set up yet.", until Stripe env is set — same as `/pricing`. On viewports up to 800px the globe sidebar stacks above the map and the stats bar stays inside the map, so it no longer covers the header. `GET /api/health` returns `{ok, time, version when VERCEL_GIT_COMMIT_SHA is a commit, checks}` with booleans only. Cixy persona text was not edited.
 - Where: `spatial-dashboard/track.html`, `spatial-dashboard/src/trackPage.js`, `spatial-dashboard/src/styles.css`, `spatial-dashboard/lib/health.js`, `spatial-dashboard/api/health.js`, `spatial-dashboard/test/health.test.mjs`, `spatial-dashboard/test/stripe.test.mjs`.
 - Undo: revert this PR. No env, Stripe, Supabase, or Vercel settings were changed.
+
+## 2026-10-14 — Geoxis Lead (Grok): launch polish (branch `geoxis-lead/launch-polish`)
+- What: `/api/config` adds `ownerEmails` (both master admins; `ownerEmail` kept for old clients). Draft `terms.html` + `privacy.html` (in theme, `noindex`, marked draft for Awad), added to `vite.config.js` inputs. `public/robots.txt` + `public/sitemap.xml`. Meta description/OG tags on index, pricing, track. README Meridian line fixed.
+- Who: Geoxis Lead (Grok). Theme unchanged, no SVGs.
+- Undo: revert the PR's squash commit.

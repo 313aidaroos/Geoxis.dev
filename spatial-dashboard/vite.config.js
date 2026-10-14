@@ -62,6 +62,9 @@ export default defineConfig({
         track: resolve(__dirname, "track.html"),
         setPassword: resolve(__dirname, "set-password.html"),
         authCallback: resolve(__dirname, "auth/callback.html"),
+        // 2026-10-14 (Geoxis Lead / Grok): draft legal pages.
+        terms: resolve(__dirname, "terms.html"),
+        privacy: resolve(__dirname, "privacy.html"),
       },
     },
   },
