@@ -16,6 +16,7 @@ const timeline = document.getElementById("timeline");
 const payPanel = document.getElementById("payPanel");
 const payCopy = document.getElementById("payCopy");
 const payBtn = document.getElementById("payPackage");
+const payCardBtn = document.getElementById("payPackageCard");
 const sampleBtn = document.getElementById("sampleBtn");
 const map = document.getElementById("packageMap");
 
@@ -75,7 +76,9 @@ function showPay(data) {
   result.classList.add("hidden");
   payPanel.classList.remove("hidden");
   payCopy.textContent = data.message || `This package is $${PACKAGE_PRICE_USD} (${PACKAGE_PRICE_IXIS} Ixis). The first 3 packages are free.`;
-  payBtn.dataset.number = normalizeTrackingNumber(input.value);
+  const number = normalizeTrackingNumber(input.value);
+  payBtn.dataset.number = number;
+  if (payCardBtn) payCardBtn.dataset.number = number;
 }
 
 async function lookup({ pay = false, sample = false } = {}) {
@@ -145,6 +148,29 @@ payBtn.addEventListener("click", async () => {
   lookup({ pay: true });
 });
 
+// 2026-10-14 (Geoxis Lead / Grok): one-time package card checkout. Stays disabled until /api/checkout reports the package SKU.
+(async () => {
+  if (!payCardBtn) return;
+  const sku = payCardBtn.dataset.cardSku;
+  const cardStatus = await fetch("/api/checkout").then((r) => (r.ok ? r.json() : null)).catch(() => null);
+  if (!cardStatus?.enabled || !cardStatus.skus?.[sku]) return;
+  payCardBtn.disabled = false;
+  payCardBtn.removeAttribute("title");
+  payCardBtn.classList.remove("text-slate-500", "cursor-not-allowed");
+  payCardBtn.classList.add("text-slate-200", "hover:bg-surface-2");
+  payCardBtn.addEventListener("click", async () => {
+    const trackingNumber = payCardBtn.dataset.number || normalizeTrackingNumber(input.value);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", ...authHeader() },
+      body: JSON.stringify({ sku, quantity: 1, trackingNumber }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.url) window.location.href = data.url;
+    else setStatus(data.message || "Card checkout could not start. Nothing was charged.", "bad");
+  });
+})();
+
 paintGuess();
 if (new URLSearchParams(location.search).get("sample") === "1") lookup({ sample: true });
 
@@ -156,7 +182,7 @@ mountPageHelp({
     "The map shows where the package is now, and the list shows every stop.",
     "Your first 3 different packages are free.",
     "The next package is $1, which is 100 Ixis. The price is shown before you pay.",
-    "Sign in with Apixis to pay. Card payment is not set up yet.",
+    "Sign in with Apixis to pay with Ixis, or press Pay by card · $1 when card checkout is set up.",
     "After you pay, you can keep opening that package until it is delivered. A refresh does not charge you again.",
   ],
 });

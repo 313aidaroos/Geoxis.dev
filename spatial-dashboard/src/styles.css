@@ -98,6 +98,31 @@ input.invalid { border-color: #ef4444; }
 #cesiumContainer .cesium-viewer-timelineContainer { display: none !important; }
 #cesiumContainer .cesium-widget-credits { display: none !important; }
 
+/* 2026-10-14: on a phone the stats bar is wider than the map column and paints over the sidebar header.
+   Stack the existing sidebar above the map and keep the bar inside the map. Theme unchanged. */
+@media (max-width: 800px) {
+  #app { flex-direction: column; }
+  #sidebar {
+    width: 100%;
+    height: 38vh;
+    max-height: 38vh;
+    min-height: 0;
+    overflow: hidden;
+    border-right: 0;
+    border-bottom: 1px solid #2c3245;
+  }
+  #app > main { flex: 1 1 auto; min-height: 0; }
+  #metricsBar {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: calc(100% - 16px);
+    transform: none;
+  }
+  .metric { min-width: 0; flex: 1 1 0; padding: 8px 10px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ai-panel, .toggle, .toggle::after { transition: none; }
   .pulse span { animation: none !important; }
