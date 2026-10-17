@@ -191,7 +191,7 @@ export class GeospatialMap {
     const dest = Cesium.Cartesian3.fromDegrees(longitude, latitude - offsetDeg, this.initialAltitude);
     const orientation = {
       heading: Cesium.Math.toRadians(0),
-      pitch: Cesium.Math.toRadians(this.initialPitch),
+      pitch: Cesium.Math.toRadians(-90),
       roll: 0,
     };
     if (animate) {
