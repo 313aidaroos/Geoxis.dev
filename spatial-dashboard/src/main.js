@@ -364,6 +364,8 @@ export class B2BSaasEngine {
     // Once per page: say whose fleet is on the globe (2026-10-06, Claude).
     let told = false;
     this.bus.on("stream:meta", ({ tenant, demo }) => {
+      const indicator = document.getElementById("geoxisFeedProvenance");
+      if (indicator) indicator.textContent = demo ? "DEMO DATA · not live freight" : "CONNECTED FLEET · provider-reported positions";
       if (told || !tenant) return;
       told = true;
       if (demo) {
