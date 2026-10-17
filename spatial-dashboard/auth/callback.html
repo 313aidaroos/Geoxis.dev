@@ -3,78 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Signing in...</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
+  <title>Signing in… — Geoxis</title>
+  <meta name="robots" content="noindex" />
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
-  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-100 flex items-center justify-center">
-  <div class="text-center">
-    <img src="/brand/logo-full.png" alt="Geoxis" width="89" height="28" class="h-8 w-auto mx-auto mb-3" />
-    <div class="text-lg">Signing you in...</div>
-  </div>
+<body>
+  <main class="card-page">
+    <div style="text-align:center">
+      <img src="/brand/logo-full.png" alt="Geoxis" width="120" height="36" style="height:36px;width:auto;margin:0 auto 14px;display:block" />
+      <div class="muted">Signing you in…</div>
+    </div>
+  </main>
   <script type="module">
     import { consumeAuthHash } from "/src/authClient.js";
 
-    // Consume hash-based token (implicit flow fallback)
     consumeAuthHash();
-
-    // Check for PKCE code in query
     const params = new URLSearchParams(location.search);
     const code = params.get("code");
     const next = params.get("next");
     const safe = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
 
+    async function supabase() {
+      const cfg = await fetch("/api/config", { cache: "no-store" }).then((r) => r.json());
+      const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
+      return createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
+    }
+    const go = (hasPassword) => { location.href = hasPassword ? safe : `/set-password?next=${encodeURIComponent(safe)}`; };
+
     if (code) {
-      // PKCE flow - exchange code for session
       try {
-        const cfg = await fetch("/api/config", { cache: "no-store" }).then(r => r.json());
-        const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
-        const supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
-
-        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+        const sb = await supabase();
+        const { data, error } = await sb.auth.exchangeCodeForSession(code);
         if (error) throw error;
-
-        // Check if user has ever set a password
-        const hasPassword = data.user?.user_metadata?.has_password;
-        if (!hasPassword) {
-          location.href = `/set-password.html?next=${encodeURIComponent(safe)}`;
-        } else {
-          location.href = safe;
-        }
+        go(data.user?.user_metadata?.has_password);
       } catch (err) {
         console.error("[callback] PKCE exchange failed:", err);
         location.href = "/login";
       }
     } else {
-      // Hash-based token already consumed, redirect to set-password or next
       setTimeout(async () => {
         const token = localStorage.getItem("geoxis.session.access_token");
-        if (token) {
-          // Check if user has password set
-          const cfg = await fetch("/api/config", { cache: "no-store" }).then(r => r.json());
-          const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
-          const supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
-          const { data } = await supabase.auth.getUser();
-          
-          const hasPassword = data.user?.user_metadata?.has_password;
-          if (!hasPassword) {
-            location.href = `/set-password.html?next=${encodeURIComponent(safe)}`;
-          } else {
-            location.href = safe;
-          }
-        } else {
-          location.href = "/login";
-        }
+        if (!token) { location.href = "/login"; return; }
+        const sb = await supabase();
+        const { data } = await sb.auth.getUser();
+        go(data.user?.user_metadata?.has_password);
       }, 500);
     }
   </script>

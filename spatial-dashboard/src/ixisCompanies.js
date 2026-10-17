@@ -31,7 +31,7 @@ export function renderIxisCompanies(root = document) {
         a.rel = "noopener";
         a.textContent = name;
         // Same muted link style as the sidebar nav (Login / Support / Admin); py-1 keeps taps easy on mobile.
-        a.className = "inline-block py-1 text-slate-400 hover:text-emerald-300";
+        a.className = "ix-link";
         return a;
       }),
     );

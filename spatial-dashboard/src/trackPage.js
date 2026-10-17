@@ -1,3 +1,4 @@
+import "./shell.js";
 import { authHeader, loadMe } from "./authClient.js";
 import { detectCarrier, normalizeTrackingNumber } from "../lib/carriers.js";
 import { PACKAGE_PRICE_IXIS, PACKAGE_PRICE_USD } from "../lib/pricing.js";
@@ -24,7 +25,8 @@ const BUY = `https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=${en
 
 function setStatus(text, kind) {
   status.textContent = text || "";
-  status.className = "mt-3 text-sm " + (kind === "bad" ? "text-red-300" : kind === "good" ? "text-emerald-300" : "text-slate-400");
+  status.className = kind === "bad" ? "bad" : kind === "good" ? "ok" : "muted";
+  status.style.margin = "10px 0 0";
 }
 
 function paintGuess() {
@@ -54,15 +56,18 @@ function renderResult(data) {
   (data.stops || []).forEach((stop, index) => {
     const item = document.createElement("li");
     const current = index === data.stops.length - 1;
-    item.className = "relative pl-4 border-l border-line pb-4";
+    item.className = "trk-stop";
+    item.style.cssText = "position:relative;padding:0 0 14px 16px;border-left:2px solid " + (current ? "var(--primary)" : "var(--line-strong)");
     const when = document.createElement("div");
-    when.className = "text-[12px] text-slate-500";
+    when.className = "dim";
+    when.style.fontSize = "12px";
     when.textContent = stop.time ? stop.time.replace("T", " ").replace(/Z$/, " UTC") : "Time not listed";
     const where = document.createElement("div");
-    where.className = "text-[14px] text-slate-100";
+    where.style.cssText = "font-size:14px;font-weight:600;color:var(--text)";
     where.textContent = stop.place || "Place not listed";
     const what = document.createElement("div");
-    what.className = current ? "text-[13px] text-emerald-300" : "text-[13px] text-slate-400";
+    what.className = current ? "ok" : "muted";
+    what.style.fontSize = "13px";
     what.textContent = current && !data.delivered ? `${stop.status} · where it is now` : stop.status;
     item.append(when, where, what);
     timeline.append(item);
@@ -115,7 +120,8 @@ async function lookup({ pay = false, sample = false } = {}) {
       setStatus(data.message || "Not enough Ixis.", "bad");
       const link = document.createElement("a");
       link.href = BUY;
-      link.className = "ml-2 text-emerald-300 underline";
+      link.className = "ok";
+    link.style.cssText = "margin-left:8px;text-decoration:underline";
       link.textContent = "Buy Ixis";
       status.append(link);
       return;
@@ -156,8 +162,6 @@ payBtn.addEventListener("click", async () => {
   if (!cardStatus?.enabled || !cardStatus.skus?.[sku]) return;
   payCardBtn.disabled = false;
   payCardBtn.removeAttribute("title");
-  payCardBtn.classList.remove("text-slate-500", "cursor-not-allowed");
-  payCardBtn.classList.add("text-slate-200", "hover:bg-surface-2");
   payCardBtn.addEventListener("click", async () => {
     const trackingNumber = payCardBtn.dataset.number || normalizeTrackingNumber(input.value);
     const res = await fetch("/api/checkout", {

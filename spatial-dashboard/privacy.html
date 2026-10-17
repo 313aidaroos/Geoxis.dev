@@ -3,42 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geoxis — Privacy Policy</title>
+  <title>Privacy Policy — Geoxis</title>
   <meta name="description" content="Geoxis privacy policy (draft, pending owner review)." />
   <meta name="robots" content="noindex" />
-  <link rel="stylesheet" href="/src/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
-  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-100 font-sans flex items-center justify-center p-6">
-  <!-- 2026-10-14 (Geoxis Lead / Grok): DRAFT text for Awad's review. Not legal advice. noindex until approved. -->
-  <main class="w-full max-w-2xl rounded-2xl border border-line bg-surface-1 p-6 shadow-2xl">
-    <a href="/" class="inline-block mb-3"><img src="/brand/logo-full.png" alt="Geoxis" width="89" height="28" class="h-8 w-auto" /></a>
-    <a href="/" class="block text-emerald-300 text-sm">← Geoxis globe</a>
-    <h1 class="mt-4 text-2xl font-semibold">Privacy Policy</h1>
-    <p class="mt-2 text-[12px] text-amber-300">Draft, pending review by Apixis Dev LLC. Last updated 2026-10-14.</p>
-    <div class="mt-4 space-y-3 text-sm text-slate-300">
-      <p>Apixis Dev LLC runs Geoxis. This page explains what we collect.</p>
-      <p><strong>What we collect.</strong> Your Apixis ID or email, the positions and assets you send, tracking numbers you look up, support messages, and payment records (card payments are handled by Stripe; we never see full card numbers).</p>
-      <p><strong>Why.</strong> To run the map, bill your plan, answer support, and prevent abuse.</p>
-      <p><strong>Who processes it.</strong> Supabase (database), Vercel (hosting), Stripe (card payments), Apixis Wallet (Ixis payments), Ship24 (package lookups), and our AI provider for Cixy questions you ask.</p>
-      <p><strong>Your choices.</strong> Ask for a copy or deletion of your data at geoxis@apixis.dev.</p>
+<body>
+  <header data-shell data-active=""></header>
+  <main class="card-page">
+    <!-- 2026-10-14 (Geoxis Lead / Grok): DRAFT text for Awad's review. Not legal advice. noindex until approved. -->
+    <div class="card card-wide panel">
+      <div class="panel-body" style="padding:24px">
+        <h1 class="title" style="font-size:26px">Privacy Policy</h1>
+        <p class="warn" style="font-size:12px;margin:0 0 14px">Draft, pending review by Apixis Dev LLC. Last updated 2026-10-14.</p>
+        <div style="display:grid;gap:10px;color:var(--text-2)">
+          <p>Apixis Dev LLC runs Geoxis. This page explains what we collect.</p>
+          <p><strong>What we collect.</strong> Your Apixis ID or email, the positions and assets you send, tracking numbers you look up, support messages, and payment records (card payments are handled by Stripe; we never see full card numbers).</p>
+          <p><strong>Why.</strong> To run the map, bill your plan, answer support, and prevent abuse.</p>
+          <p><strong>Who processes it.</strong> Supabase (database), Vercel (hosting), Stripe (card payments), Apixis Wallet (Ixis payments), Ship24 (package lookups), OpenSky Network and aisstream.io (public aircraft and ship positions), adsbdb, Planespotters.net and Wikimedia Commons (aircraft and ship identity and photos), and our AI provider for Cixy questions you ask.</p>
+          <p><strong>Your choices.</strong> Ask for a copy or deletion of your data at geoxis@apixis.dev.</p>
+        </div>
+      </div>
     </div>
-    <footer class="mt-6 pt-4 border-t border-line">
-      <div class="text-[12px] text-slate-500 mb-1">Other Ixis companies</div>
-      <nav data-ixis-companies aria-label="Other Ixis companies" class="flex flex-wrap gap-x-3 gap-y-0 text-[12px]"></nav>
-    </footer>
   </main>
-  <script type="module" src="/src/ixisCompanies.js"></script>
+  <footer data-shell-footer></footer>
+  <script type="module" src="/src/shell.js"></script>
 </body>
 </html>

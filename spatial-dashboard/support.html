@@ -3,41 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geoxis Support</title>
-  <link rel="stylesheet" href="/src/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
+  <title>Support — Geoxis</title>
+  <meta name="description" content="Geoxis support. Messages go to the Geoxis queue and the owner." />
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
-  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-100 font-sans flex items-center justify-center p-6">
-  <main class="w-full max-w-xl rounded-2xl border border-line bg-surface-1 p-6 shadow-2xl">
-    <a href="/" class="inline-block mb-3"><img src="/brand/logo-full.png" alt="Geoxis" width="89" height="28" class="h-8 w-auto" /></a>
-    <a href="/" class="block text-emerald-300 text-sm">← Geoxis globe</a>
-    <h1 class="mt-4 text-2xl font-semibold">Geoxis support</h1>
-    <p class="mt-2 text-sm text-slate-400">Messages enter the geoxis@apixis.dev queue and route to awad@apixis.dev.</p>
-    <form id="supportForm" class="mt-6 space-y-3">
-      <input id="email" type="email" required placeholder="you@company.com" class="w-full h-11 px-3 rounded-md bg-surface-2 border border-line" />
-      <input id="subject" required minlength="3" maxlength="140" placeholder="Subject" class="w-full h-11 px-3 rounded-md bg-surface-2 border border-line" />
-      <textarea id="message" required minlength="10" maxlength="5000" rows="7" placeholder="What do you need help with?" class="w-full p-3 rounded-md bg-surface-2 border border-line"></textarea>
-      <button class="w-full h-11 rounded-md bg-emerald-500 text-slate-950 font-medium">Send to support</button>
-    </form>
-    <p id="status" class="mt-4 text-sm text-slate-400"></p>
-    <!-- Other Ixis companies (2026-09-29, Geoxis Lead / Grok): links rendered from src/ixisCompanies.js -->
-    <footer class="mt-6 pt-4 border-t border-line">
-      <div class="text-[12px] text-slate-500 mb-1">Other Ixis companies</div>
-      <nav data-ixis-companies aria-label="Other Ixis companies" class="flex flex-wrap gap-x-3 gap-y-0 text-[12px]"></nav>
-    </footer>
+<body>
+  <header data-shell data-active=""></header>
+  <main class="card-page">
+    <div class="card card-wide panel">
+      <div class="panel-body" style="padding:24px">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Support</p>
+        <h1 class="title" style="font-size:26px">Geoxis support</h1>
+        <p class="muted" style="margin:0 0 16px">Messages enter the geoxis@apixis.dev queue and route to awad@apixis.dev.</p>
+        <form id="supportForm" style="display:grid;gap:8px">
+          <input id="email" type="email" required placeholder="you@company.com" class="field" />
+          <input id="subject" required minlength="3" maxlength="140" placeholder="Subject" class="field" />
+          <textarea id="message" required minlength="10" maxlength="5000" rows="7" placeholder="What do you need help with?" class="field"></textarea>
+          <button class="btn btn-primary">Send to support</button>
+        </form>
+        <p id="status" class="muted" style="margin:12px 0 0;font-size:13px"></p>
+      </div>
+    </div>
   </main>
+  <footer data-shell-footer></footer>
   <script type="module">
+    import "/src/shell.js";
     import { authHeader, loadMe } from "/src/authClient.js";
     const status = document.getElementById("status");
     loadMe().then((me) => { if (me?.user?.email) document.getElementById("email").value = me.user.email; }).catch(() => {});
@@ -56,6 +49,5 @@
     });
   </script>
   <script type="module" src="/src/walletPill.js"></script>
-  <script type="module" src="/src/ixisCompanies.js"></script>
 </body>
 </html>

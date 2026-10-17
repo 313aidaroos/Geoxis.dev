@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your fleet — Geoxis</title>
+  <meta name="description" content="Your tracked assets, ingest keys and plan on Geoxis." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/brand/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
+</head>
+<body>
+  <header data-shell data-active="fleet"></header>
+  <main class="page" id="fleetPage">
+    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Your fleet</p>
+    <h1 class="title">Everything you are following</h1>
+    <p class="lead">Your assets, the keys your devices use to post positions, and how many things your plan lets you follow.</p>
+    <div id="fleetBody" style="margin-top:22px;display:grid;gap:16px"></div>
+  </main>
+  <footer data-shell-footer></footer>
+  <script type="module" src="/src/fleetPage.js"></script>
+  <script type="module" src="/src/walletPill.js"></script>
+</body>
+</html>

@@ -37,6 +37,8 @@ test("health report is booleans and a commit only, never secret values", () => {
     cixyConfigured: true,
     stripeConfigured: true,
     ship24Configured: true,
+    openskyAuthenticated: false,
+    aisConfigured: false,
   });
   for (const value of Object.values(body.checks)) assert.equal(typeof value, "boolean");
   const serialized = JSON.stringify(body);
@@ -63,6 +65,8 @@ test("health report omits version and reports every check false when env is empt
     cixyConfigured: false,
     stripeConfigured: false,
     ship24Configured: false,
+    openskyAuthenticated: false,
+    aisConfigured: false,
   });
 });
 
