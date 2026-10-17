@@ -66,6 +66,7 @@ export class UIController {
       this.#updateCount();
     });
 
+    this.bus.on("stream:meta", () => this.#updateCount());
     this.bus.on("feed:status", ({ connected, text, messagesPerSecond }) => {
       $("feedDot").className = `w-2 h-2 rounded-full ${connected ? "bg-emerald-400" : "bg-slate-500"}`;
       if (text) $("feedStatus").textContent = text;
@@ -148,7 +149,7 @@ export class UIController {
   }
 
   #updateCount() {
-    $("assetCount").textContent = String(this.state.assets.size);
+    $("assetCount").textContent = this.state.dataMode === "demo" ? "Demo" : String(this.state.assets.size);
   }
 
   /* ---------------------------------------------------------------- */
@@ -157,11 +158,11 @@ export class UIController {
 
   #bindMetrics() {
     this.bus.on("metrics:changed", ({ totalAssets, latencyMs, activeAlarms }) => {
-      $("mTotalAssets").textContent = String(totalAssets);
+      $("mTotalAssets").textContent = totalAssets == null ? "—" : String(totalAssets);
       $("mLatency").textContent = latencyMs === null ? "—" : String(Math.round(latencyMs));
       const alarmsEl = $("mAlarms");
-      alarmsEl.textContent = String(activeAlarms);
-      alarmsEl.classList.toggle("alarm", activeAlarms > 0);
+      alarmsEl.textContent = activeAlarms == null ? "—" : String(activeAlarms);
+      alarmsEl.classList.toggle("alarm", activeAlarms != null && activeAlarms > 0);
     });
   }
 
