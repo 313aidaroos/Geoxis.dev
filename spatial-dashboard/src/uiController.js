@@ -206,22 +206,41 @@ export class UIController {
 
   #renderSelected(a) {
     const style = ASSET_STYLES[a.type] ?? ASSET_STYLES.default;
+    const value = (v) => v === null || v === undefined || v === "" ? "Unavailable" : String(v);
+    const number = (v, digits = 0) => Number.isFinite(Number(v)) && v !== null && v !== "" ? Number(v).toFixed(digits) : "Unavailable";
     $("selType").style.background = style.color;
-    $("selName").textContent = a.name;
-    $("selId").textContent = `${a.id} · ${style.label} · ${a.operator}`;
+    $("selName").textContent = value(a.name || a.callsign || a.id);
+    $("selId").textContent = [a.id, style.label, a.operator].filter(Boolean).join(" · ");
+    const identity = a.type === "aircraft"
+      ? [["Flight", a.flightNumber], ["Callsign", a.callsign], ["Registration", a.registration], ["Aircraft model", a.model || a.aircraftType], ["Altitude", a.altitudeMeters == null ? null : number(a.altitudeMeters) + " m"]]
+      : a.type === "vessel"
+        ? [["IMO", a.imo], ["MMSI", a.mmsi], ["Flag", a.flag], ["Vessel class", a.vesselType]]
+        : a.type === "truck"
+          ? [["Vehicle ID", a.vehicleId || a.id], ["Fleet", a.operator], ["Truck model", a.model], ["Registration", a.registration]]
+          : [];
     const rows = [
-      ["Speed", a.type === "vessel" ? `${a.speedKnots} kn` : `${a.speedKph} km/h`],
-      ["Heading", `${Math.round(a.heading)}°`],
-      ["Position", `${a.latitude.toFixed(4)}, ${a.longitude.toFixed(4)}`],
+      ...identity,
+      ["Speed", a.type === "vessel" ? (a.speedKnots == null ? null : number(a.speedKnots, 1) + " kn") : (a.speedKph == null ? null : number(a.speedKph, 1) + " km/h")],
+      ["Heading", a.heading == null ? null : number(a.heading) + "°"],
+      ["Position", Number.isFinite(a.latitude) && Number.isFinite(a.longitude) ? a.latitude.toFixed(4) + ", " + a.longitude.toFixed(4) : null],
       ["Destination", a.destination],
       ["Cargo", a.cargo],
-      ["Distance run", `${a.odometerKm} km`],
-      ["Status", a.alarm ? a.alarmReason : "Nominal"],
-      ["Last fix", new Date(a.timestamp).toLocaleTimeString()],
+      ["Distance run", a.odometerKm == null ? null : number(a.odometerKm, 1) + " km"],
+      ["Status", a.alarm ? a.alarmReason : a.status],
+      ["Source", a.source || a.provider],
+      ["Last fix", a.timestamp && !Number.isNaN(Date.parse(a.timestamp)) ? new Date(a.timestamp).toLocaleString() : null],
     ];
-    $("selMeta").innerHTML = rows
-      .map(([k, v]) => `<dt class="text-slate-500">${k}</dt><dd class="text-slate-200 text-right tabular ${k === "Status" && a.alarm ? "text-amber-300" : ""}">${v}</dd>`)
-      .join("");
+    const meta = $("selMeta");
+    meta.replaceChildren();
+    for (const [key, raw] of rows) {
+      const dt = document.createElement("dt");
+      dt.className = "text-slate-400";
+      dt.textContent = key;
+      const dd = document.createElement("dd");
+      dd.className = "text-slate-100 text-right tabular";
+      dd.textContent = value(raw);
+      meta.append(dt, dd);
+    }
   }
 
   /* ---------------------------------------------------------------- */
