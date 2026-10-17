@@ -167,3 +167,71 @@ body.geoxis-immersive #geoxisFeedProvenance { top:max(12px,env(safe-area-inset-t
  body.geoxis-immersive .geoxis-globe-controls button { flex:1 1 0; min-width:0; font-size:12px; padding:11px 6px; white-space:nowrap; }
  body.geoxis-immersive #selectedCard { max-width:calc(100vw - 24px); }
 }
+
+/* Geoxis 2026 — global intelligence visual system */
+body, body * {font-family:"DM Sans",system-ui,sans-serif !important}
+#app { background:#030a19; }
+#sidebar { width:326px; min-width:326px; box-shadow:10px 0 50px #010713a0; z-index:3; }
+.geoxis-brand-header { height:78px; min-height:78px; gap:12px; background:linear-gradient(100deg,#081c39,#051126); }
+.geoxis-logo {width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 0 12px #3388ff66)}
+.geoxis-brand-header .leading-tight > div:first-child {font-size:21px;letter-spacing:.07em;font-weight:800;color:#f3faff}
+.geoxis-brand-header .leading-tight > div:nth-child(2) {font-size:9px;letter-spacing:.14em;color:#79b5ec}
+.geoxis-brand-header nav {gap:8px;align-self:flex-start;margin-top:9px}
+.geoxis-brand-header nav a {font-size:10px}
+.geoxis-sidebar-heading {display:flex;align-items:center;gap:10px;padding:19px 18px 8px;color:#75b6ff;font-size:10px;font-weight:800;letter-spacing:.17em}
+.geoxis-live-indicator {width:7px;height:7px;border-radius:50%;background:#1ce6bd;box-shadow:0 0 14px #1ce6bd}
+.geoxis-sidebar-heading-rule {height:1px;background:#235080;flex:1}
+#sidebar input[type=search] {background:#091d3b;border:1px solid #255486;border-radius:12px;height:43px}
+#sidebar .toggle-row {border-radius:9px;padding:8px 9px;color:#bad2ec}
+#sidebar .toggle-row:hover {background:#102b50}
+#sidebar #assetList {padding-top:4px}
+#sidebar .asset-row {background:#071a35;border:1px solid #153657;margin:5px 3px;padding:12px 10px}
+#sidebar .asset-row:hover {border-color:#3d9bff}
+#app > main {background:radial-gradient(ellipse at 54% 45%,#17417d 0%,#071b3b 38%,#030a1a 78%);isolation:isolate}
+#cesiumContainer {z-index:0}
+#cesiumContainer:after {content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#020a1b44 0%,transparent 30%,transparent 70%,#020a1b44 100%)}
+.geoxis-viewport-heading {position:absolute;z-index:12;top:22px;left:26px;pointer-events:none;display:flex;flex-direction:column;gap:5px;max-width:390px;text-shadow:0 3px 16px #000}
+.geoxis-eyebrow {color:#65d9fa;letter-spacing:.17em;font-size:10px;font-weight:800}
+.geoxis-viewport-heading strong {color:#f4fbff;font-size:25px;letter-spacing:-.04em;line-height:1.15}
+.geoxis-viewport-heading > span:last-child {font-size:12px;color:#b2cdeb}
+#metricsBar {top:auto !important;bottom:82px !important;left:50% !important;right:auto !important;transform:translateX(-50%) !important;z-index:15;min-width:min(580px,calc(100% - 32px));justify-content:space-around;background:#05172de8 !important}
+.metric {padding:14px 20px}
+.metric-label {font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.metric-value {font-size:24px}
+#geoxisFeedProvenance {top:22px;right:20px;z-index:20;font-size:10px;letter-spacing:.04em}
+#mapStatus {bottom:18px;left:20px;border-color:#1b4875;background:#04162de0}
+#selectedCard {top:85px;z-index:21;max-height:calc(100% - 180px);overflow:auto}
+#btnAiToggle {bottom:18px;z-index:20;background:#0a2c57;border-color:#348ee2;color:#eaf9ff}
+.geoxis-globe-controls {bottom:18px;right:95px;z-index:22}
+.geoxis-globe-controls button {background:#0b2d58f2;border-color:#2e79b9;font-size:12px;font-weight:700;padding:11px 13px}
+body.geoxis-immersive .geoxis-viewport-heading {top:24px;left:24px}
+body.geoxis-immersive #metricsBar {display:flex !important;bottom:88px !important}
+body.geoxis-immersive .geoxis-globe-controls {bottom:20px;right:22px}
+@media(max-width:800px){
+ #app {display:flex;flex-direction:column}
+ #sidebar {width:100%;min-width:0;height:auto;max-height:none;min-height:0;flex:0 0 auto;overflow:visible}
+ .geoxis-brand-header {height:64px;min-height:64px;padding:0 12px}
+ .geoxis-logo {width:38px;height:38px}
+ .geoxis-brand-header .leading-tight > div:first-child {font-size:18px}
+ .geoxis-brand-header nav a {font-size:10px}
+ #sidebar > nav[aria-label="Family navigation"] {padding:7px 12px;white-space:nowrap;overflow:auto;flex-wrap:nowrap}
+ .geoxis-sidebar-heading,#sidebar > div:has(#assetSearch),#sidebar > div:has(#layerToggles),#sidebar > div:has(#assetList),#sidebar footer,#sidebar > div:has(#feedDot) {display:none !important}
+ #app > main {height:auto;min-height:0;flex:1 1 auto}
+ .geoxis-viewport-heading {top:58px;left:16px;right:16px}
+ .geoxis-viewport-heading strong {font-size:20px}
+ .geoxis-viewport-heading > span:last-child {font-size:10px}
+ #geoxisFeedProvenance {top:12px;right:12px;left:auto;max-width:calc(100% - 24px);font-size:10px}
+ #metricsBar {bottom:82px !important;left:12px !important;right:12px !important;min-width:0;max-width:none;width:auto;transform:none !important;overflow:visible}
+ .metric {padding:10px 7px;text-align:center}
+ .metric-label {font-size:8px;letter-spacing:0}
+ .metric-value {font-size:19px}
+ #mapStatus {bottom:16px;left:12px;right:12px;max-width:calc(100% - 24px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}
+ .geoxis-globe-controls {bottom:152px;left:12px;right:12px;justify-content:center;flex-wrap:nowrap;gap:6px}
+ .geoxis-globe-controls button {flex:1;min-width:0;font-size:11px;padding:10px 5px}
+ #btnAiToggle {bottom:18px;right:12px}
+ #selectedCard {top:110px;right:12px;left:12px;width:auto;max-height:calc(100% - 280px)}
+ #aiPanel {width:calc(100% - 24px);right:12px;bottom:12px;height:min(520px,75%)}
+ body.geoxis-immersive #metricsBar {bottom:90px !important;left:12px !important;right:12px !important}
+ body.geoxis-immersive .geoxis-globe-controls {bottom:calc(18px + env(safe-area-inset-bottom));left:12px;right:12px}
+ body.geoxis-immersive .geoxis-viewport-heading {top:58px;left:16px}
+}
