@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "product": "Geoxis",
+  "orbitCore": "313aidaroos/Apixis.dev",
+  "runtimeConnected": false,
+  "capabilities": [
+    {
+      "id": "geoxis.asset.read",
+      "mode": "read",
+      "status": "implemented_gated",
+      "proposedEndpoint": "POST /api/orbit/assets",
+      "requiresOwnerTenantBinding": true,
+      "requiresTests": true
+    }
+  ],
+  "notes": "Adapter code committed but NOT enabled, deployed/authorized/tested with production data. runtimeConnected stays false."
+}
