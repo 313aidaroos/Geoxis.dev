@@ -127,3 +127,43 @@ input.invalid { border-color: #ef4444; }
   .ai-panel, .toggle, .toggle::after { transition: none; }
   .pulse span { animation: none !important; }
 }
+
+/* Geoxis command-center visual refresh: preserves existing Cesium and live API wiring. */
+:root { color-scheme: dark; }
+body, body * { font-family: "IBM Plex Sans", system-ui, sans-serif !important; }
+body { background: #030b1d !important; }
+#sidebar { background: linear-gradient(165deg,#06162d 0%,#040b1b 100%) !important; border-color: #173456 !important; }
+#app > main { background: radial-gradient(circle at 52% 46%,#0b3564 0%,#041127 52%,#020817 100%); }
+#cesiumContainer { filter: saturate(1.2) contrast(1.07); }
+#metricsBar { background: rgba(4,18,42,.86) !important; border: 1px solid #21508a !important; box-shadow: 0 10px 42px #0008,0 0 22px #1460b522 !important; border-radius: 14px !important; }
+.metric-label { color:#9db7d9; }
+.metric-value { color:#f6fbff; font-weight:700; }
+#selectedCard { background: rgba(4,16,38,.94) !important; border-color:#2860a0 !important; box-shadow:0 20px 65px #0009 !important; }
+.asset-row { border-radius:10px; }
+.asset-row:hover,.asset-row[aria-selected="true"] { background:#12305b !important; border-color:#3272b5 !important; }
+.toggle:checked { background:#387cff; }
+#feedDot.bg-emerald-400 { box-shadow:0 0 12px #22e6a7; }
+#sidebar a:hover { color:#61d6ff !important; }
+@media (max-width:800px) { #metricsBar { overflow-x:auto; } }
+
+.geoxis-globe-controls { position:absolute; z-index:25; bottom:76px; right:16px; display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.geoxis-globe-controls button { background:#071b39ed; border:1px solid #3981d0; border-radius:10px; color:#eaf6ff; padding:10px 14px; cursor:pointer; box-shadow:0 6px 24px #0008; }
+.geoxis-globe-controls button:hover { background:#164078; }
+.geoxis-globe-controls button[hidden] { display:none; }
+body.geoxis-immersive #app > main { position:fixed !important; inset:0; width:100vw; height:100dvh; z-index:9999; }
+body.geoxis-immersive #metricsBar { display:none; }
+body.geoxis-immersive .geoxis-globe-controls { bottom:24px; }
+@media(max-width:800px){ .geoxis-globe-controls{bottom:20px;right:8px;} .geoxis-globe-controls button{padding:8px 10px;} }
+
+/* Mobile immersive mode: keep the globe unobstructed and controls reachable. */
+body.geoxis-immersive #cesiumContainer,
+body.geoxis-immersive #cesiumContainer .cesium-viewer,
+body.geoxis-immersive #cesiumContainer .cesium-widget,
+body.geoxis-immersive #cesiumContainer canvas { width:100% !important; height:100% !important; }
+body.geoxis-immersive #mapStatus { display:none !important; }
+body.geoxis-immersive #geoxisFeedProvenance { top:max(12px,env(safe-area-inset-top)); left:12px; right:auto; max-width:calc(100vw - 24px); font-size:11px; }
+@media(max-width:800px) {
+ body.geoxis-immersive .geoxis-globe-controls { bottom:calc(20px + env(safe-area-inset-bottom)); left:12px; right:12px; justify-content:center; flex-wrap:nowrap; gap:8px; }
+ body.geoxis-immersive .geoxis-globe-controls button { flex:1 1 0; min-width:0; font-size:12px; padding:11px 6px; white-space:nowrap; }
+ body.geoxis-immersive #selectedCard { max-width:calc(100vw - 24px); }
+}

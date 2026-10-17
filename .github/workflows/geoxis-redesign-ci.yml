@@ -1,0 +1,30 @@
+name: Geoxis redesign validation
+on:
+  pull_request:
+    paths:
+      - 'spatial-dashboard/**'
+      - '.github/workflows/geoxis-redesign-ci.yml'
+  push:
+    branches:
+      - feature/immersive-live-globe
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: spatial-dashboard
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: spatial-dashboard/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: |
+          if find test -type f -name '*.mjs' -print -quit 2>/dev/null | grep -q .; then
+            find test -type f -name '*.mjs' -print0 | xargs -0 node --test
+          else
+            echo 'No .mjs tests found; build validation completed.'
+          fi
