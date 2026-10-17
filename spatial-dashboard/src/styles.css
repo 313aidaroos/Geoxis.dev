@@ -154,3 +154,16 @@ body.geoxis-immersive #app > main { position:fixed !important; inset:0; width:10
 body.geoxis-immersive #metricsBar { display:none; }
 body.geoxis-immersive .geoxis-globe-controls { bottom:24px; }
 @media(max-width:800px){ .geoxis-globe-controls{bottom:20px;right:8px;} .geoxis-globe-controls button{padding:8px 10px;} }
+
+/* Mobile immersive mode: keep the globe unobstructed and controls reachable. */
+body.geoxis-immersive #cesiumContainer,
+body.geoxis-immersive #cesiumContainer .cesium-viewer,
+body.geoxis-immersive #cesiumContainer .cesium-widget,
+body.geoxis-immersive #cesiumContainer canvas { width:100% !important; height:100% !important; }
+body.geoxis-immersive #mapStatus { display:none !important; }
+body.geoxis-immersive #geoxisFeedProvenance { top:max(12px,env(safe-area-inset-top)); left:12px; right:auto; max-width:calc(100vw - 24px); font-size:11px; }
+@media(max-width:800px) {
+ body.geoxis-immersive .geoxis-globe-controls { bottom:calc(20px + env(safe-area-inset-bottom)); left:12px; right:12px; justify-content:center; flex-wrap:nowrap; gap:8px; }
+ body.geoxis-immersive .geoxis-globe-controls button { flex:1 1 0; min-width:0; font-size:12px; padding:11px 6px; white-space:nowrap; }
+ body.geoxis-immersive #selectedCard { max-width:calc(100vw - 24px); }
+}
