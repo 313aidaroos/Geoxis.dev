@@ -172,6 +172,7 @@ export class AppState {
     this.metrics = { totalAssets: 0, latencyMs: null, activeAlarms: 0 };
     this.layers = { fleet: true, weather: false, risk: true, trails: true };
     this.feed = { connected: false, messagesPerSecond: 0 };
+    this.dataMode = "unknown";
   }
 
   upsertAsset(frame) {
@@ -221,8 +222,8 @@ export class AppState {
   #recomputeMetrics() {
     let alarms = 0;
     for (const a of this.assets.values()) if (a.alarm) alarms += 1;
-    this.metrics.totalAssets = this.assets.size;
-    this.metrics.activeAlarms = alarms;
+    this.metrics.totalAssets = this.dataMode === "demo" ? null : this.assets.size;
+    this.metrics.activeAlarms = this.dataMode === "demo" ? null : alarms;
     this.bus.emit("metrics:changed", { ...this.metrics });
   }
 }
@@ -363,7 +364,14 @@ export class B2BSaasEngine {
     this.bus.on("stream:status", (status) => this.state.setFeedStatus(status));
     // Once per page: say whose fleet is on the globe (2026-10-06, Claude).
     let told = false;
-    this.bus.on("stream:meta", ({ tenant, demo }) => {
+    this.bus.on("stream:meta", ({ tenant, demo, sources }) => {
+      const mode = demo ? "demo" : "live";
+      if (this.state.dataMode !== mode) {
+        this.state.dataMode = mode;
+        this.state.metrics.totalAssets = demo ? null : this.state.assets.size;
+        this.state.metrics.activeAlarms = demo ? null : [...this.state.assets.values()].filter(a => a.alarm).length;
+        this.bus.emit("metrics:changed", { ...this.state.metrics });
+      }
       const indicator = document.getElementById("geoxisFeedProvenance");
       if (indicator) indicator.textContent = demo ? "DEMO DATA · not live freight" : "CONNECTED FLEET · provider-reported positions";
       if (told || !tenant) return;
