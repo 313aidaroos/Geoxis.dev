@@ -7,6 +7,7 @@
  */
 
 import { GeospatialMap } from "./mapController.js";
+import { installImmersiveGlobe } from "./immersiveGlobe.js";
 import { AssetDataStreamer } from "./streamSimulator.js";
 import { SpatialAIAgent } from "./cixyController.js";
 import { UIController } from "./uiController.js";
@@ -312,6 +313,7 @@ export class B2BSaasEngine {
       await this.map.initialize({ googleMapsKey: this.settings.getKey("googleMapsKey") });
       this.#wireLayers();
       this.#replayMarkers();
+      this.disposeImmersive = installImmersiveGlobe(this);
     } catch (err) {
       console.error("[engine] globe failed; live list still running", err);
       this.ui.toast("Globe failed to start. Live assets are still in the list.", "error");
