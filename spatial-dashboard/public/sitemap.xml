@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://geoxis.vercel.app/</loc></url>
-  <url><loc>https://geoxis.vercel.app/pricing</loc></url>
-  <url><loc>https://geoxis.vercel.app/track</loc></url>
-  <url><loc>https://geoxis.vercel.app/feed</loc></url>
-  <url><loc>https://geoxis.vercel.app/companies</loc></url>
-  <url><loc>https://geoxis.vercel.app/support</loc></url>
-  <url><loc>https://geoxis.vercel.app/fleet</loc></url>
+  <url><loc>https://geoxis.apixis.dev/</loc></url>
+  <url><loc>https://geoxis.apixis.dev/pricing</loc></url>
+  <url><loc>https://geoxis.apixis.dev/track</loc></url>
+  <url><loc>https://geoxis.apixis.dev/feed</loc></url>
+  <url><loc>https://geoxis.apixis.dev/companies</loc></url>
+  <url><loc>https://geoxis.apixis.dev/support</loc></url>
+  <url><loc>https://geoxis.apixis.dev/fleet</loc></url>
 </urlset>
