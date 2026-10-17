@@ -15,3 +15,11 @@ Vite + Cesium in `spatial-dashboard/`. Preserve existing auth, `GET /api/assets`
 
 ## Delivery
 Implement in the existing Vite/Cesium app. Avoid replacing working data infrastructure. Submit PR against main; do not merge or deploy without review.
+
+## Asset identity and 3D presentation
+- Aircraft detail: flight number, callsign, ICAO24/registration (when provided), operator, type/model, altitude, ground speed, heading, departure/arrival when verifiably supplied, position and source timestamp.
+- Vessel detail: vessel name, IMO, MMSI, flag, type, course, speed, reported destination, AIS timestamp. Do not infer identities from coordinates.
+- Truck detail: fleet/operator, vehicle ID, authorized plate/registration, model, location, speed, heading, shipment status and ETA only when supplied by the fleet provider. Respect tenant boundaries and privacy permissions.
+- Use correctly scaled or symbolic 3D aircraft/ship/truck models in Cesium; animate transitions only between timestamped observations. Mark interpolated visuals as interpolated, not new telemetry.
+- Click asset marker/model to focus camera, highlight actual trail and open expandable identity panel. Provide follow/unfollow, close and copy-ID controls; avoid confusing a globe click with an asset selection.
+- All identifiers and status fields must have explicit unavailable/unknown fallback. Demo labels remain visible for synthetic assets.
