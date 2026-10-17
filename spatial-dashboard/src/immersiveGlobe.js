@@ -13,6 +13,7 @@ export function installImmersiveGlobe(engine) {
   const expand = controls.querySelector('[data-action="expand"]');
   const spin = controls.querySelector('[data-action="spin"]');
   const close = controls.querySelector('[data-action="close"]');
+
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let rotating = false;
   let expanded = false;
@@ -37,6 +38,10 @@ export function installImmersiveGlobe(engine) {
     close.hidden = !value;
     expand.hidden = value;
     viewer.resize();
+    if (value) {
+      viewer.trackedEntity = undefined;
+      viewer.camera.flyHome(1.2);
+    }
   }
   expand.addEventListener("click", () => setExpanded(true));
   close.addEventListener("click", () => setExpanded(false));
@@ -46,7 +51,7 @@ export function installImmersiveGlobe(engine) {
   const stopOnInteraction = () => setSpin(false);
   viewer.canvas.addEventListener("pointerdown", stopOnInteraction);
   viewer.scene.preRender.addEventListener(tick);
-  setSpin(!reduceMotion.matches);
+  setSpin(false);
   return () => {
     setSpin(false); setExpanded(false);
     document.removeEventListener("keydown", onKey);
