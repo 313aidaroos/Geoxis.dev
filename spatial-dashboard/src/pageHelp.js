@@ -4,13 +4,9 @@ function fillSteps(list, steps) {
   list.replaceChildren();
   steps.forEach((text, index) => {
     const item = document.createElement("li");
-    item.className = "flex gap-2";
-    const n = document.createElement("span");
-    n.className = "text-emerald-300 shrink-0";
-    n.textContent = `${index + 1}.`;
     const body = document.createElement("span");
     body.textContent = text;
-    item.append(n, body);
+    item.append(body);
     list.append(item);
   });
 }
@@ -18,34 +14,38 @@ function fillSteps(list, steps) {
 export function mountPageHelp({ title, steps }) {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "fixed bottom-4 right-4 z-50 h-8 px-3 inline-flex items-center gap-1.5 rounded-full bg-surface-1 border border-line-strong text-[12px] text-slate-200 shadow-lg shadow-black/40 hover:bg-surface-2 focus-ring";
+  btn.className = "btn btn-ghost btn-sm";
+  btn.style.cssText = "position:fixed;bottom:16px;right:16px;z-index:50;border-radius:999px;box-shadow:var(--shadow)";
   btn.setAttribute("aria-expanded", "false");
   btn.setAttribute("aria-controls", "cixyPageHelp");
   const dot = document.createElement("span");
-  dot.className = "w-1.5 h-1.5 rounded-full bg-emerald-400";
+  dot.className = "live-dot";
   dot.setAttribute("aria-hidden", "true");
   btn.append(dot, document.createTextNode("Cixy"));
 
   const panel = document.createElement("section");
   panel.id = "cixyPageHelp";
-  panel.className = "hidden fixed bottom-14 right-4 z-50 w-[min(22rem,calc(100vw-2rem))] rounded-lg bg-surface-1 border border-line shadow-2xl shadow-black/50";
+  panel.className = "hidden panel";
+  panel.style.cssText = "position:fixed;bottom:60px;right:16px;z-index:50;width:min(22rem,calc(100vw - 2rem))";
   panel.setAttribute("role", "dialog");
   panel.setAttribute("aria-label", title);
 
   const head = document.createElement("div");
-  head.className = "px-4 py-3 border-b border-line flex items-center gap-2";
+  head.className = "panel-head";
   const heading = document.createElement("div");
-  heading.className = "text-[14px] font-medium text-slate-100";
+  heading.className = "panel-title";
   heading.textContent = title;
   const close = document.createElement("button");
   close.type = "button";
-  close.className = "ml-auto p-1 text-slate-500 hover:text-slate-200 focus-ring rounded";
+  close.className = "gx-icon-btn";
+  close.style.cssText = "margin-left:auto;width:28px;height:28px";
   close.setAttribute("aria-label", "Close help");
   close.textContent = "✕";
   head.append(heading, close);
 
   const list = document.createElement("ol");
-  list.className = "px-4 py-3 space-y-2 text-[13px] text-slate-300";
+  list.className = "steps";
+  list.style.cssText = "padding:12px 14px;margin:0";
   fillSteps(list, steps);
   panel.append(head, list);
 

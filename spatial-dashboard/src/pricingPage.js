@@ -1,3 +1,4 @@
+import "./shell.js";
 import { loadMe, authHeader } from "./authClient.js";
 import { mountPageHelp } from "./pageHelp.js";
 import {
@@ -29,7 +30,8 @@ const BUY = `https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=${en
 
 function setStatus(text, kind) {
   status.textContent = text;
-  status.className = "mt-4 text-sm " + (kind === "bad" ? "text-red-300" : kind === "good" ? "text-emerald-300" : "text-slate-400");
+  status.className = kind === "bad" ? "bad" : kind === "good" ? "ok" : "muted";
+  status.style.marginTop = "14px";
 }
 
 function paintQuote() {
@@ -82,7 +84,8 @@ async function postRedeem(body, button, idleLabel) {
       status.append(document.createTextNode(" "));
       const link = document.createElement("a");
       link.href = BUY;
-      link.className = "text-emerald-300 underline";
+      link.className = "ok";
+    link.style.textDecoration = "underline";
       link.textContent = "Buy Ixis";
       status.append(link);
       return;
@@ -186,8 +189,6 @@ mountPageHelp({
     const sku = btn.dataset.cardSku;
     if (!status.skus?.[sku]) continue;
     btn.disabled = false;
-    btn.classList.remove("text-slate-500", "cursor-not-allowed");
-    btn.classList.add("text-slate-200", "hover:bg-surface-2");
     btn.addEventListener("click", async () => {
       const qty = Number(document.getElementById("objectCount")?.value || 1);
       const res = await fetch("/api/checkout", {

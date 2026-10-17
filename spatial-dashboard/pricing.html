@@ -8,144 +8,97 @@
   <meta property="og:title" content="Pricing — Geoxis" />
   <meta property="og:description" content="Geoxis pricing: $5 (500 Ixis) per tracked thing per month, 3-thing minimum, 14-day free trial for 1 thing." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://spatial-dashboard-xi.vercel.app/pricing" />
+  <meta property="og:url" content="https://geoxis.vercel.app/pricing" />
+  <meta property="og:image" content="https://geoxis.vercel.app/brand/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          fontFamily: { sans: ["IBM Plex Sans", "system-ui", "sans-serif"] },
-          colors: {
-            surface: { 0: "#0f1117", 1: "#161922", 2: "#1d2130", 3: "#262b3d" },
-            line: { DEFAULT: "#2c3245", strong: "#3b4258" },
-          },
-        },
-      },
-    };
-  </script>
-  <link rel="stylesheet" href="/src/styles.css" />
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
+  <meta name="twitter:image" content="https://geoxis.vercel.app/brand/og-image.png" />
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
   <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-200 font-sans antialiased pb-20">
-  <header class="bg-surface-1 border-b border-line">
-    <div class="min-h-14 px-5 py-2 flex flex-wrap items-center gap-3 max-w-6xl mx-auto">
-      <a href="/" class="flex items-center gap-3 leading-tight">
-        <span>
-          <img src="/brand/logo-full.png" alt="Geoxis" width="76" height="24" class="block h-6 w-auto" />
-          <span class="block text-[11px] text-slate-500">Live operations · Rotterdam</span>
-        </span>
-      </a>
-      <div class="ml-auto flex flex-wrap items-center gap-3">
-        <span data-wallet-pill></span>
-        <nav class="flex items-center gap-3 text-[12px]" aria-label="Account">
-          <a href="/login" class="text-slate-400 hover:text-emerald-300">Login</a>
-          <a href="/support" class="text-slate-400 hover:text-emerald-300">Support</a>
-          <a href="/admin" class="text-slate-400 hover:text-emerald-300">Admin</a>
-        </nav>
-      </div>
-    </div>
-    <nav aria-label="Family navigation" class="border-t border-line">
-      <div class="px-5 py-2 max-w-6xl mx-auto flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
-        <a href="/" class="text-slate-400 hover:text-emerald-300">Live globe</a>
-        <a href="/companies" class="text-emerald-300 hover:text-emerald-100">Apixis Companies →</a>
-        <a href="/feed" class="text-emerald-300 hover:text-emerald-100">Feed →</a>
-        <a href="/pricing" aria-current="page" class="text-slate-100">Pricing</a>
-        <a href="/track" class="text-emerald-300 hover:text-emerald-100">Track a package</a>
-      </div>
-    </nav>
-  </header>
+<body>
+  <header data-shell data-active="pricing"></header>
 
-  <main class="max-w-6xl mx-auto px-5 py-8">
-    <p class="text-[11px] uppercase tracking-wider text-emerald-300">Geoxis · Monthly tracking</p>
-    <h1 class="mt-2 text-2xl font-semibold text-slate-100">Follow what is moving</h1>
-    <p class="mt-2 text-sm text-slate-400 max-w-2xl">A thing can be a plane, a ship, a truck, freight, mail, or equipment. You pick how many. Each one is $5 a month. The smallest plan is 3 things ($15 a month).</p>
+  <main class="page">
+    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Geoxis · Monthly tracking</p>
+    <h1 class="title">Follow what is moving</h1>
+    <p class="lead">A thing can be a plane, a ship, a truck, freight, mail, or equipment. You pick how many. Each one is $5 a month. The smallest plan is 3 things ($15 a month).</p>
 
-    <section class="mt-8" aria-labelledby="how-heading">
-      <h2 id="how-heading" class="text-[15px] font-medium text-slate-100">How it works</h2>
-      <ol class="mt-3 space-y-2 text-sm text-slate-300 max-w-2xl list-decimal list-inside">
-        <li>Choose how many things you want on the map.</li>
-        <li>Pay $5 a month for each one. That is 500 Ixis. Three things is the smallest plan.</li>
-        <li>You can pay by card or with Ixis. 100 Ixis = $1. Card checkout is not set up yet, so the button pays with Ixis.</li>
-        <li>Each payment covers 30 days. Pay again to keep those things on the map.</li>
-        <li>Or start a 14-day free trial and follow 1 thing.</li>
-        <li>A map report is $10 once (1,000 Ixis). For 200 or more things, email sales.</li>
-      </ol>
+    <section class="panel" style="margin-top:22px" aria-labelledby="how-heading">
+      <div class="panel-head"><h2 id="how-heading" class="panel-title">How it works</h2></div>
+      <div class="panel-body">
+        <ol class="steps">
+          <li>Choose how many things you want on the map.</li>
+          <li>Pay $5 a month for each one. That is 500 Ixis. Three things is the smallest plan.</li>
+          <li>You can pay by card or with Ixis. 100 Ixis = $1. Card checkout is not set up yet, so the button pays with Ixis.</li>
+          <li>Each payment covers 30 days. Pay again to keep those things on the map.</li>
+          <li>Or start a 14-day free trial and follow 1 thing.</li>
+          <li>A map report is $10 once (1,000 Ixis). For 200 or more things, email sales.</li>
+        </ol>
+      </div>
     </section>
 
-    <div class="mt-8 grid gap-6 lg:grid-cols-3">
-      <article class="lg:col-span-2 rounded-lg border border-line-strong bg-surface-1 p-6">
-        <h2 class="text-lg font-medium text-slate-100">Things to follow</h2>
-        <p class="mt-1 text-[13px] text-slate-400">$5 per thing each month · 500 Ixis · 3 thing minimum</p>
-        <label class="mt-5 block text-[13px] text-slate-300" for="objectCount">How many things?</label>
-        <input id="objectCount" type="number" min="3" max="199" value="3" inputmode="numeric"
-               class="mt-1 w-32 h-10 px-3 rounded-md bg-surface-2 border border-line text-slate-100 focus-ring" />
-        <div class="mt-4">
-          <div id="priceUsd" class="text-2xl font-semibold text-slate-100">$15/month</div>
-          <div id="priceIxis" class="text-sm text-slate-400">1,500 Ixis</div>
-          <p id="priceNote" class="mt-1 text-[13px] text-slate-500">3 things × $5 (500 Ixis each). This covers 30 days.</p>
-        </div>
-        <div id="payBlock">
-          <p class="mt-4 text-[13px] text-slate-400">Pay by card or with Ixis (100 Ixis = $1). Card checkout is not set up yet.</p>
-          <div class="mt-3 flex flex-wrap gap-2">
-            <button id="payObjects" type="button" class="h-10 px-4 rounded-md bg-emerald-500 text-slate-950 text-[13px] font-medium hover:bg-emerald-400 focus-ring">Pay with Ixis · 1,500</button>
-            <button id="payObjectsCard" data-card-sku="geoxis.tracking.object" type="button" disabled class="h-10 px-4 rounded-md border border-line text-[13px] text-slate-500 cursor-not-allowed">Pay by card</button>
+    <div class="grid-3" style="margin-top:16px;grid-template-columns:2fr 1fr">
+      <article class="panel" style="border-color:var(--line-strong)">
+        <div class="panel-head"><div><div class="panel-title">Things to follow</div><div class="panel-sub">$5 per thing each month · 500 Ixis · 3 thing minimum</div></div></div>
+        <div class="panel-body">
+          <label class="label" for="objectCount">How many things?</label>
+          <input id="objectCount" type="number" min="3" max="199" value="3" inputmode="numeric" class="field" style="width:140px" />
+          <div style="margin-top:16px">
+            <div id="priceUsd" class="stat-big" style="font-size:30px">$15/month</div>
+            <div id="priceIxis" class="muted">1,500 Ixis</div>
+            <p id="priceNote" class="muted" style="font-size:13px;margin:6px 0 0">3 things × $5 (500 Ixis each). This covers 30 days.</p>
           </div>
-          <button id="startTrial" type="button" class="mt-3 h-10 px-4 rounded-md bg-emerald-500/15 text-emerald-300 text-[13px] font-medium hover:bg-emerald-500/25 focus-ring">Start 14-day free trial</button>
-          <p class="mt-2 text-[12px] text-slate-500">The trial follows 1 thing and does not charge you. Sign in with Apixis to start it.</p>
-        </div>
-        <div id="salesBlock" class="hidden mt-4">
-          <p class="text-[13px] text-slate-300">200 or more things are set up by sales. Send a note to awad@apixis.dev.</p>
+          <div id="payBlock">
+            <p class="muted" style="font-size:13px;margin:16px 0 10px">Pay by card or with Ixis (100 Ixis = $1). Card checkout is not set up yet.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <button id="payObjects" type="button" class="btn btn-primary">Pay with Ixis · 1,500</button>
+              <button id="payObjectsCard" data-card-sku="geoxis.tracking.object" type="button" disabled class="btn btn-ghost">Pay by card</button>
+            </div>
+            <button id="startTrial" type="button" class="btn btn-soft" style="margin-top:12px">Start 14-day free trial</button>
+            <p class="dim" style="font-size:12px;margin:8px 0 0">The trial follows 1 thing and does not charge you. Sign in with Apixis to start it.</p>
+          </div>
+          <div id="salesBlock" class="hidden" style="margin-top:16px">
+            <p class="muted" style="font-size:13px">200 or more things are set up by sales. Send a note to awad@apixis.dev.</p>
+          </div>
         </div>
       </article>
 
-      <div class="space-y-6">
-        <article class="rounded-lg border border-line bg-surface-1 p-6">
-          <h2 class="text-lg font-medium text-slate-100">Map report</h2>
-          <p class="mt-1 text-[13px] text-slate-400">A one-time report of where things are.</p>
-          <div class="mt-4 text-2xl font-semibold text-slate-100">$10</div>
-          <div class="text-sm text-slate-400">1,000 Ixis</div>
-          <p class="mt-3 text-[13px] text-slate-400">Pay by card or with Ixis. Card checkout is not set up yet.</p>
-          <button id="payReport" type="button" class="mt-3 h-9 px-4 rounded-md bg-emerald-500/15 text-emerald-300 text-[13px] font-medium hover:bg-emerald-500/25 focus-ring">Pay with Ixis · 1,000</button>
-          <button id="payReportCard" data-card-sku="geoxis.export.report" type="button" disabled class="mt-3 h-9 px-4 rounded-md border border-line text-[13px] text-slate-500 cursor-not-allowed">Pay by card · $10</button>
+      <div style="display:grid;gap:16px;align-content:start">
+        <article class="panel">
+          <div class="panel-head"><div><div class="panel-title">Map report</div><div class="panel-sub">A one-time report of where things are.</div></div></div>
+          <div class="panel-body">
+            <div class="stat-big">$10</div>
+            <div class="muted">1,000 Ixis</div>
+            <p class="muted" style="font-size:13px;margin:10px 0">Pay by card or with Ixis. Card checkout is not set up yet.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <button id="payReport" type="button" class="btn btn-soft btn-sm">Pay with Ixis · 1,000</button>
+              <button id="payReportCard" data-card-sku="geoxis.export.report" type="button" disabled class="btn btn-ghost btn-sm">Pay by card · $10</button>
+            </div>
+          </div>
         </article>
 
-        <article class="rounded-lg border border-line bg-surface-1 p-6">
-          <h2 class="text-lg font-medium text-slate-100">200 or more</h2>
-          <p class="mt-1 text-[13px] text-slate-400">Tell us how many things you need. We will write back.</p>
-          <form id="salesForm" class="mt-4 space-y-2">
-            <input id="salesName" required maxlength="80" placeholder="Your name" class="w-full h-9 px-3 rounded-md bg-surface-2 border border-line text-[13px] text-slate-100 placeholder-slate-500 focus-ring" />
-            <input id="salesEmail" type="email" required maxlength="120" placeholder="you@company.com" class="w-full h-9 px-3 rounded-md bg-surface-2 border border-line text-[13px] text-slate-100 placeholder-slate-500 focus-ring" />
-            <input id="salesCount" type="number" min="200" required placeholder="How many things?" class="w-full h-9 px-3 rounded-md bg-surface-2 border border-line text-[13px] text-slate-100 placeholder-slate-500 focus-ring" />
-            <textarea id="salesNote" rows="3" maxlength="1000" placeholder="What do you need to follow?" class="w-full p-3 rounded-md bg-surface-2 border border-line text-[13px] text-slate-100 placeholder-slate-500 focus-ring"></textarea>
-            <button class="h-9 px-4 rounded-md bg-emerald-500 text-slate-950 text-[13px] font-medium hover:bg-emerald-400 focus-ring" type="submit">Email awad@apixis.dev</button>
-          </form>
+        <article class="panel">
+          <div class="panel-head"><div><div class="panel-title">200 or more</div><div class="panel-sub">Tell us how many things you need. We will write back.</div></div></div>
+          <div class="panel-body">
+            <form id="salesForm" style="display:grid;gap:8px">
+              <input id="salesName" required maxlength="80" placeholder="Your name" class="field" />
+              <input id="salesEmail" type="email" required maxlength="120" placeholder="you@company.com" class="field" />
+              <input id="salesCount" type="number" min="200" required placeholder="How many things?" class="field" />
+              <textarea id="salesNote" rows="3" maxlength="1000" placeholder="What do you need to follow?" class="field"></textarea>
+              <button class="btn btn-primary btn-sm" type="submit">Email awad@apixis.dev</button>
+            </form>
+          </div>
         </article>
       </div>
     </div>
-    <p id="status" class="mt-4 text-sm text-slate-400" role="status"></p>
+    <p id="status" class="muted" style="margin-top:14px" role="status"></p>
   </main>
 
-  <footer class="border-t border-line bg-surface-1">
-    <div class="max-w-6xl mx-auto px-5 py-4">
-      <div class="text-[12px] text-slate-500 mb-1">Other Ixis companies</div>
-      <nav data-ixis-companies aria-label="Other Ixis companies" class="flex flex-wrap gap-x-3 gap-y-0 text-[12px]"></nav>
-    </div>
-  </footer>
-
+  <footer data-shell-footer></footer>
   <script type="module" src="/src/pricingPage.js"></script>
   <script type="module" src="/src/walletPill.js"></script>
-  <script type="module" src="/src/ixisCompanies.js"></script>
 </body>
 </html>

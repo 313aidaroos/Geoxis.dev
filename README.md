@@ -1,8 +1,8 @@
 # Geoxis
 
-A live map of everything a company has moving in the real world, on a 3D globe.
+A live map of everything a company has moving in the real world, on a spinning day-and-night 3D globe.
 
-App lives in `spatial-dashboard/`. The globe polls `GET /api/assets` — company fleet positions from the server clock, plus live ADS-B over Rotterdam from OpenSky when that network answers.
+App lives in `spatial-dashboard/`. The globe draws worldwide live aircraft (`GET /api/air`, OpenSky), live ships when AIS is connected (`GET /api/ships`), and the signed-in company's own fleet or the demo fleet (`GET /api/assets`). Click an asset for its real photo and details (`GET /api/aircraft`).
 
 ```bash
 cd spatial-dashboard
@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-No keys required for the default globe and the live feed. A Google Map Tiles key is optional (settings gear). Cixy runs on the server (`ANTHROPIC_API_KEY`).
+No keys required for the globe and the aircraft feed. Optional: a free OpenSky account for faster refresh, an aisstream.io key for live ships. Cixy runs on the server (`ANTHROPIC_API_KEY`).
 
 Your own fleet: sign in, create an ingest key, and post positions to `POST /api/positions`. See [`spatial-dashboard/docs/INGEST.md`](spatial-dashboard/docs/INGEST.md).
 

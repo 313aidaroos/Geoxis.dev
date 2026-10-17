@@ -16,7 +16,7 @@ function city(place) {
 
 function flatRoute(stops) {
   const wrap = document.createElement("div");
-  wrap.className = "h-full w-full bg-surface-0";
+  wrap.style.cssText = "height:100%;width:100%;background:#060b1a";
   const pins = (stops || []).filter((s) => Number.isFinite(s.latitude) && Number.isFinite(s.longitude));
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("viewBox", "0 0 640 360");
@@ -26,7 +26,7 @@ function flatRoute(stops) {
   const bg = document.createElementNS("http://www.w3.org/2000/svg", "rect");
   bg.setAttribute("width", "640");
   bg.setAttribute("height", "360");
-  bg.setAttribute("fill", "#0f1117");
+  bg.setAttribute("fill", "#060b1a");
   svg.append(bg);
   const project = (stop) => ({
     x: ((stop.longitude + 180) / 360) * 640,
@@ -76,25 +76,27 @@ export async function showPackageRoute(container, stops) {
   }
   if (!viewer || !container.contains(viewer.cesiumWidget?.container)) {
     container.replaceChildren();
-    viewer = new Cesium.Viewer(container, {
-      animation: false,
-      timeline: false,
-      baseLayerPicker: false,
-      geocoder: false,
-      homeButton: false,
-      sceneModePicker: false,
-      navigationHelpButton: false,
-      fullscreenButton: false,
-      infoBox: false,
-      selectionIndicator: false,
-      imageryProvider: await Cesium.ArcGisMapServerImageryProvider.fromUrl(
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer",
-      ),
-    });
+    try {
+      // 2026-10-17 (Claude, redesign): Cesium 1.1xx dropped the `imageryProvider` option; use baseLayer.
+      // A failing tile host no longer rejects the whole draw: the layer just stays dark.
+      viewer = new Cesium.Viewer(container, {
+        animation: false, timeline: false, baseLayerPicker: false, geocoder: false, homeButton: false,
+        sceneModePicker: false, navigationHelpButton: false, fullscreenButton: false, infoBox: false, selectionIndicator: false,
+        baseLayer: Cesium.ImageryLayer.fromProviderAsync(
+          Cesium.ArcGisMapServerImageryProvider.fromUrl("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer", { enablePickFeatures: false }),
+        ),
+      });
+    } catch (err) {
+      console.warn("[trackMap] Cesium unavailable, drawing the flat route", err);
+      viewer = null;
+      container.replaceChildren(flatRoute(pins));
+      return;
+    }
     const scene = viewer.scene;
-    scene.globe.baseColor = Cesium.Color.fromCssColorString("#0f1117");
-    scene.backgroundColor = Cesium.Color.fromCssColorString("#0f1117");
+    scene.globe.baseColor = Cesium.Color.fromCssColorString("#0b1a3a");
+    scene.backgroundColor = Cesium.Color.fromCssColorString("#03060f");
     scene.skyAtmosphere.show = true;
+    scene.globe.enableLighting = true;
     window.addEventListener("resize", () => viewer?.resize());
   }
   viewer.resize();
@@ -111,14 +113,14 @@ export async function showPackageRoute(container, stops) {
       point: {
         pixelSize: current ? 14 : 8,
         color: Cesium.Color.fromCssColorString(current ? "#34d399" : "#94a3b8"),
-        outlineColor: Cesium.Color.fromCssColorString("#0f1117"),
+        outlineColor: Cesium.Color.fromCssColorString("#060b1a"),
         outlineWidth: 2,
       },
       label: {
         text: current ? `${city(stop.place)} · now` : city(stop.place),
         font: "13px sans-serif",
         fillColor: Cesium.Color.fromCssColorString("#f8fafc"),
-        outlineColor: Cesium.Color.fromCssColorString("#0f1117"),
+        outlineColor: Cesium.Color.fromCssColorString("#060b1a"),
         outlineWidth: 3,
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         pixelOffset: new Cesium.Cartesian2(0, -18),

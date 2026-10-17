@@ -8,121 +8,70 @@
   <meta property="og:title" content="Track a package — Geoxis" />
   <meta property="og:description" content="Track any package on a map. 3 free lookups, then $1 per package." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://spatial-dashboard-xi.vercel.app/track" />
+  <meta property="og:url" content="https://geoxis.vercel.app/track" />
+  <meta property="og:image" content="https://geoxis.vercel.app/brand/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          fontFamily: { sans: ["IBM Plex Sans", "system-ui", "sans-serif"] },
-          colors: {
-            surface: { 0: "#0f1117", 1: "#161922", 2: "#1d2130", 3: "#262b3d" },
-            line: { DEFAULT: "#2c3245", strong: "#3b4258" },
-          },
-        },
-      },
-    };
-  </script>
-  <link rel="stylesheet" href="/src/styles.css" />
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
+  <meta name="twitter:image" content="https://geoxis.vercel.app/brand/og-image.png" />
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
   <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-200 font-sans antialiased pb-20">
-  <header class="bg-surface-1 border-b border-line">
-    <div class="min-h-14 px-5 py-2 flex flex-wrap items-center gap-3 max-w-6xl mx-auto">
-      <a href="/" class="flex items-center gap-3 leading-tight">
-        <span>
-          <img src="/brand/logo-full.png" alt="Geoxis" width="76" height="24" class="block h-6 w-auto" />
-          <span class="block text-[11px] text-slate-500">Live operations · Rotterdam</span>
-        </span>
-      </a>
-      <div class="ml-auto flex flex-wrap items-center gap-3">
-        <span data-wallet-pill></span>
-        <nav class="flex items-center gap-3 text-[12px]" aria-label="Account">
-          <a href="/login" class="text-slate-400 hover:text-emerald-300">Login</a>
-          <a href="/support" class="text-slate-400 hover:text-emerald-300">Support</a>
-          <a href="/admin" class="text-slate-400 hover:text-emerald-300">Admin</a>
-        </nav>
-      </div>
-    </div>
-    <nav aria-label="Family navigation" class="border-t border-line">
-      <div class="px-5 py-2 max-w-6xl mx-auto flex flex-wrap gap-x-4 gap-y-1 text-[12px]">
-        <a href="/" class="text-slate-400 hover:text-emerald-300">Live globe</a>
-        <a href="/companies" class="text-emerald-300 hover:text-emerald-100">Apixis Companies →</a>
-        <a href="/feed" class="text-emerald-300 hover:text-emerald-100">Feed →</a>
-        <a href="/pricing" class="text-emerald-300 hover:text-emerald-100">Pricing</a>
-        <a href="/track" aria-current="page" class="text-slate-100">Track a package</a>
-      </div>
-    </nav>
-  </header>
+<body>
+  <header data-shell data-active="track"></header>
 
-  <main class="max-w-6xl mx-auto px-5 py-8">
-    <p class="text-[11px] uppercase tracking-wider text-emerald-300">Geoxis · Package tracker</p>
-    <h1 class="mt-2 text-2xl font-semibold text-slate-100">Where is this package?</h1>
-    <p class="mt-2 text-sm text-slate-400 max-w-2xl">Enter a shipping number from USPS, UPS, FedEx, DHL, and many other carriers. The map shows where it is now and every stop it has made.</p>
+  <main class="page">
+    <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Geoxis · Package tracker</p>
+    <h1 class="title">Where is this package?</h1>
+    <p class="lead">Enter a shipping number from USPS, UPS, FedEx, DHL, and many other carriers. The map shows where it is now and every stop it has made.</p>
 
-    <section class="mt-6" aria-labelledby="how-heading">
-      <h2 id="how-heading" class="text-[15px] font-medium text-slate-100">How it works</h2>
-      <ol class="mt-3 space-y-2 text-sm text-slate-300 max-w-2xl list-decimal list-inside">
-        <li>Type the tracking number. We guess the carrier from it.</li>
-        <li>Your first 3 different packages are free. No account is needed for those.</li>
-        <li>Each package after that is $1 (100 Ixis). The price is shown before you pay.</li>
-        <li>You can pay by card or with Ixis. Card checkout is not set up yet. Sign in with Apixis to pay with Ixis.</li>
-        <li>Paying $1 lets you keep watching that one package until it is delivered. Opening it again does not charge you again.</li>
-      </ol>
-    </section>
-
-    <form id="trackForm" class="mt-6 flex flex-col sm:flex-row gap-2 max-w-3xl">
+    <form id="trackForm" style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;max-width:820px">
       <label class="sr-only" for="trackingNumber">Tracking number</label>
-      <input id="trackingNumber" name="trackingNumber" required minlength="5" maxlength="50" autocomplete="off" spellcheck="false"
-             placeholder="Tracking number" class="flex-1 h-10 px-3 rounded-md bg-surface-2 border border-line text-[13px] text-slate-100 placeholder-slate-500 focus-ring" />
-      <button class="h-10 px-4 rounded-md bg-emerald-500 text-slate-950 text-[13px] font-medium hover:bg-emerald-400 focus-ring" type="submit">Track</button>
-      <button id="sampleBtn" type="button" class="h-10 px-4 rounded-md border border-line text-[13px] text-slate-200 hover:bg-surface-2 focus-ring">See a sample package</button>
+      <input id="trackingNumber" name="trackingNumber" required minlength="5" maxlength="50" autocomplete="off" spellcheck="false" placeholder="Tracking number" class="field" style="flex:1;min-width:220px" />
+      <button class="btn btn-primary" type="submit">Track</button>
+      <button id="sampleBtn" type="button" class="btn btn-ghost">See a sample package</button>
     </form>
-    <p id="carrierGuess" class="mt-2 text-[13px] text-slate-500">We will guess the carrier from the number.</p>
-    <p id="trackStatus" class="mt-3 text-sm text-slate-400" role="status"></p>
+    <p id="carrierGuess" class="muted" style="font-size:13px;margin:8px 0 0">We will guess the carrier from the number.</p>
+    <p id="trackStatus" class="muted" role="status" style="margin:10px 0 0"></p>
 
-    <section id="payPanel" class="hidden mt-4 max-w-xl rounded-lg border border-line bg-surface-1 p-5">
-      <h2 class="text-[15px] font-medium text-slate-100">This package is $1</h2>
-      <p class="mt-1 text-2xl font-semibold text-slate-100">$1 <span class="text-sm font-normal text-slate-400">· 100 Ixis</span></p>
-      <p id="payCopy" class="mt-2 text-[13px] text-slate-300">The first 3 packages are free. This one is $1. Paying once lets you follow it until it is delivered.</p>
-      <p class="mt-2 text-[13px] text-slate-400">Pay by card or with Ixis (100 Ixis = $1). Card checkout is not set up yet. Sign in with Apixis to pay with Ixis.</p>
-      <div class="mt-3 flex flex-wrap gap-2">
-        <button id="payPackage" type="button" class="h-10 px-4 rounded-md bg-emerald-500 text-slate-950 text-[13px] font-medium hover:bg-emerald-400 focus-ring">Pay 100 Ixis</button>
-        <button id="payPackageCard" data-card-sku="geoxis.track.package" type="button" disabled title="Card checkout is not set up yet." class="h-10 px-4 rounded-md border border-line text-[13px] text-slate-500 cursor-not-allowed">Pay by card · $1</button>
+    <section id="payPanel" class="hidden panel" style="margin-top:14px;max-width:560px">
+      <div class="panel-head"><div class="panel-title">This package is $1</div><span class="chip chip-primary" style="margin-left:auto">100 Ixis</span></div>
+      <div class="panel-body">
+        <p id="payCopy" style="margin:0 0 8px">The first 3 packages are free. This one is $1. Paying once lets you follow it until it is delivered.</p>
+        <p class="muted" style="font-size:13px;margin:0 0 12px">Pay by card or with Ixis (100 Ixis = $1). Card checkout is not set up yet. Sign in with Apixis to pay with Ixis.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button id="payPackage" type="button" class="btn btn-primary">Pay 100 Ixis</button>
+          <button id="payPackageCard" data-card-sku="geoxis.track.package" type="button" disabled title="Card checkout is not set up yet." class="btn btn-ghost">Pay by card · $1</button>
+        </div>
       </div>
     </section>
 
-    <section id="trackResult" class="hidden mt-6">
-      <p id="sampleBanner" class="hidden mb-3 rounded-md border border-amber-400/40 bg-amber-400/10 px-3 py-2 text-[13px] text-amber-200">Sample package. This is an example, not a real shipment.</p>
-      <h2 id="resultTitle" class="text-[15px] font-medium text-slate-100">Package</h2>
-      <div class="mt-4 grid gap-4 lg:grid-cols-2">
-        <ol id="timeline" class="rounded-lg border border-line bg-surface-1 p-4"></ol>
-        <div id="packageMap" class="h-[420px] lg:h-[560px] rounded-lg border border-line overflow-hidden bg-surface-0" role="region" aria-label="Package map"></div>
+    <section id="trackResult" class="hidden" style="margin-top:18px">
+      <p id="sampleBanner" class="hidden chip chip-demo" style="height:auto;padding:6px 10px;margin-bottom:10px;white-space:normal">Sample package. This is an example, not a real shipment.</p>
+      <h2 id="resultTitle" class="sub">Package</h2>
+      <div class="grid-2" style="grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)">
+        <ol id="timeline" class="panel" style="list-style:none;margin:0;padding:14px"></ol>
+        <div id="packageMap" class="panel" style="height:420px;overflow:hidden;background:var(--bg-0)" role="region" aria-label="Package map"></div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:24px" aria-labelledby="how-heading">
+      <div class="panel-head"><h2 id="how-heading" class="panel-title">How it works</h2></div>
+      <div class="panel-body">
+        <ol class="steps">
+          <li>Type the tracking number. We guess the carrier from it.</li>
+          <li>Your first 3 different packages are free. No account is needed for those.</li>
+          <li>Each package after that is $1 (100 Ixis). The price is shown before you pay.</li>
+          <li>You can pay by card or with Ixis. Card checkout is not set up yet. Sign in with Apixis to pay with Ixis.</li>
+          <li>Paying $1 lets you keep watching that one package until it is delivered. Opening it again does not charge you again.</li>
+        </ol>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-line bg-surface-1 mt-10">
-    <div class="max-w-6xl mx-auto px-5 py-4">
-      <div class="text-[12px] text-slate-500 mb-1">Other Ixis companies</div>
-      <nav data-ixis-companies aria-label="Other Ixis companies" class="flex flex-wrap gap-x-3 gap-y-0 text-[12px]"></nav>
-    </div>
-  </footer>
-
+  <footer data-shell-footer></footer>
   <script type="module" src="/src/trackPage.js"></script>
   <script type="module" src="/src/walletPill.js"></script>
-  <script type="module" src="/src/ixisCompanies.js"></script>
 </body>
 </html>

@@ -50,3 +50,21 @@ See the 2026-10-06 table in `docs/LAUNCH_NOTES.md` and `docs/INGEST.md`. `npm te
 - Supabase: 003 and 004 applied and verified (see AI_CHANGELOG). The advisor WARN that `authenticated` can execute the two SECURITY DEFINER functions is intentional: RLS policies call them as the signed-in role, and they only return booleans about the caller.
 - Still Awad's: delete the root Meridian files; point `geoxis.vercel.app` at the `spatial-dashboard` project; decide on the redesign proposal (board image sent 2026-10-06).
 
+
+## 2026-10-17 (UTC) — Claude: front-end redesign (branch `claude/redesign-live-globe`, PR for Awad's review)
+
+### What Awad asked for (chat, 2026-10-17)
+Four reference mocks: spinning globe, click to zoom into the atmosphere, live planes/ships/freight/trucks moving, click one → the real photo and details. Answers to my questions: font does not matter (Inter chosen); brand kit from the repo; colorful; day and night as it spins, based on where the site is opened; landing page shows the necessary information; spin 1 turn / 2 min with auto-resume; nav = Overview, Live Globe, Fleet, Track, Pricing, Companies, Feed, Cixy; Fleet page yes; worldwide aircraft, click one → others disappear, exit → they come back; AISStream key later; real photos yes; routes for the selected asset + a layer for all; weather + risk zones shown; Cixy picture coming; four quick prompts; Cixy to the right of the globe with the text box under it; reskin every page; mobile stacks; timeline last 30 min; one PR, review first; universe (stars, Milky Way, galaxies, moon) animated behind the globe.
+
+### Built (see AI_CHANGELOG 2026-10-17 for the file list)
+Everything above. Verified locally: `npm test` 52/52, `npm run build` 12 pages, Playwright run of every page with console capture (only errors are the sandbox blocking tile/font hosts). Live feeds could not be exercised from the sandbox (egress blocks opensky-network.org, api.adsbdb.com, api.planespotters.net, gibs.earthdata.nasa.gov); they are built to the documented contracts and need a look on the Vercel preview.
+
+### Honest limits
+- Anonymous OpenSky allows one worldwide refresh every 15 minutes; planes move smoothly between refreshes by dead reckoning from speed and track. A free OpenSky account (two env vars) makes it 90 seconds.
+- Ships are the Rotterdam demo vessels until `AISSTREAM_API_KEY` is set; AIS is sampled for 6 s per request and CDN-cached per map box for a minute.
+- Trucks and freight only come from customers' ingest keys (no public source). Demo rows carry a DEMO badge.
+- Ship photos are best-effort from Wikimedia Commons; aircraft photos are the exact airframe (Planespotters via adsbdb, credit shown).
+- The globe is a real Earth (satellite imagery, real terminator, NASA city lights), not the painted look of the mocks.
+
+### Needs Awad
+Review the PR. Send `cixy.png` for `public/brand/`. Optional: OpenSky and AISStream keys in Vercel. Domain `geoxis.vercel.app` still belongs to another Vercel project (see 2026-10-06 Grok note); the site now uses it as its canonical URL in meta tags, so the move is wanted.

@@ -3,60 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geoxis Login</title>
-  <link rel="stylesheet" href="/src/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- 2026-10-17 (Geoxis Lead / Grok): official logo + brand kit (public/brand/). -->
+  <title>Sign in — Geoxis</title>
+  <meta name="robots" content="noindex" />
   <link rel="icon" href="/brand/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/brand/favicon-32.png" />
   <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png" />
-  <meta name="theme-color" content="#0f1117" />
-  <meta property="og:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta name="twitter:image" content="https://geoxis.dev/brand/og-image.png" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#060b1a" />
+  <link rel="stylesheet" href="/src/theme.css" />
 </head>
-<body class="min-h-screen bg-surface-0 text-slate-100 flex items-center justify-center p-6">
-  <main class="w-full max-w-md rounded-2xl border border-line bg-surface-1 p-6 shadow-2xl">
-    <a href="/" class="inline-block mb-3"><img src="/brand/logo-full.png" alt="Geoxis" width="89" height="28" class="h-8 w-auto" /></a>
-    <a href="/" class="block text-emerald-300 text-sm">← Geoxis globe</a>
-    <h1 class="mt-4 text-2xl font-semibold">Sign in to Geoxis</h1>
+<body>
+  <header data-shell data-active=""></header>
+  <main class="card-page">
+    <div class="card panel">
+      <div class="panel-body" style="padding:24px">
+        <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Geoxis</p>
+        <h1 class="title" style="font-size:26px">Sign in to Geoxis</h1>
+        <p class="muted" style="margin:0 0 16px">One Apixis ID and one Ixis balance across every Ixis company.</p>
 
-    <!-- Tabs -->
-    <div class="mt-6 flex border-b border-line">
-      <button id="tabMagic" class="px-4 py-2 text-sm font-medium border-b-2 border-emerald-500 text-emerald-300">Email me a link</button>
-      <button id="tabPassword" class="px-4 py-2 text-sm font-medium border-b-2 border-transparent text-slate-400 hover:text-slate-200">Password</button>
+        <a id="apixisSignIn" href="/auth/apixis/start" class="btn btn-primary btn-lg" style="width:100%">Sign in with Apixis</a>
+        <p class="dim" style="font-size:12px;margin:10px 0 18px">New to Geoxis? Create your account with Sign in with Apixis. Email link and password are for existing accounts.</p>
+
+        <div class="tabs" role="tablist">
+          <button id="tabMagic" class="tab" role="tab" aria-selected="true">Email me a link</button>
+          <button id="tabPassword" class="tab" role="tab" aria-selected="false">Password</button>
+        </div>
+
+        <form id="magicForm" style="margin-top:14px;display:grid;gap:8px">
+          <input id="emailMagic" type="email" autocomplete="email" required placeholder="you@company.com" class="field" />
+          <button class="btn btn-soft">Send magic link</button>
+        </form>
+
+        <form id="passwordForm" class="hidden" style="margin-top:14px;display:grid;gap:8px">
+          <input id="emailPassword" type="email" autocomplete="email" required placeholder="you@company.com" class="field" />
+          <input id="password" type="password" autocomplete="current-password" required placeholder="Password" class="field" />
+          <button class="btn btn-soft">Sign in</button>
+        </form>
+
+        <p id="status" class="muted" style="margin:12px 0 0;font-size:13px"></p>
+      </div>
     </div>
-
-    <!-- Magic link form (default) -->
-    <form id="magicForm" class="mt-6 space-y-3">
-      <input id="emailMagic" type="email" autocomplete="email" required placeholder="you@company.com" class="w-full h-11 px-3 rounded-md bg-surface-2 border border-line text-slate-100" />
-      <button class="w-full h-11 rounded-md bg-emerald-500 text-slate-950 font-medium">Send magic link</button>
-    </form>
-
-    <!-- Password form (hidden) -->
-    <form id="passwordForm" class="mt-6 space-y-3 hidden">
-      <input id="emailPassword" type="email" autocomplete="email" required placeholder="you@company.com" class="w-full h-11 px-3 rounded-md bg-surface-2 border border-line text-slate-100" />
-      <input id="password" type="password" autocomplete="current-password" required placeholder="Password" class="w-full h-11 px-3 rounded-md bg-surface-2 border border-line text-slate-100" />
-      <button class="w-full h-11 rounded-md bg-emerald-500 text-slate-950 font-medium">Sign in</button>
-    </form>
-
-    <p id="status" class="mt-4 text-sm text-slate-400"></p>
-
-    <!-- Sign in with Apixis (2026-09-27, Grok Bot): one Apixis ID + your Wallet balance across the family -->
-    <a id="apixisSignIn" href="/auth/apixis/start" class="mt-4 flex w-full h-11 items-center justify-center rounded-md border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 font-medium hover:bg-emerald-500/20">Sign in with Apixis</a>
-    <!-- 2026-10-04 (Grok, apixis-only-signup): new accounts are created with Apixis ID only; email link / password are for existing accounts. -->
-    <p class="mt-2 text-[12px] text-slate-500">New to Geoxis? Create your account with Sign in with Apixis. Email link and password are for existing accounts.</p>
-    <!-- Other Ixis companies (2026-09-29, Geoxis Lead / Grok): links rendered from src/ixisCompanies.js -->
-    <footer class="mt-6 pt-4 border-t border-line">
-      <div class="text-[12px] text-slate-500 mb-1">Other Ixis companies</div>
-      <nav data-ixis-companies aria-label="Other Ixis companies" class="flex flex-wrap gap-x-3 gap-y-0 text-[12px]"></nav>
-    </footer>
   </main>
+  <footer data-shell-footer></footer>
+
   <script type="module">
-    import { consumeAuthHash, requestMagicLink, clearSession } from "/src/authClient.js";
+    import "/src/shell.js";
+    import { consumeAuthHash, requestMagicLink } from "/src/authClient.js";
 
     const tabMagic = document.getElementById("tabMagic");
     const tabPassword = document.getElementById("tabPassword");
@@ -64,33 +55,24 @@
     const passwordForm = document.getElementById("passwordForm");
     const status = document.getElementById("status");
 
-    // Parse next parameter
     const params = new URLSearchParams(location.search);
     const next = params.get("next");
     const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
 
-    // Tab switching
-    tabMagic.onclick = () => {
-      tabMagic.classList.add("border-emerald-500", "text-emerald-300");
-      tabMagic.classList.remove("border-transparent", "text-slate-400");
-      tabPassword.classList.remove("border-emerald-500", "text-emerald-300");
-      tabPassword.classList.add("border-transparent", "text-slate-400");
-      magicForm.classList.remove("hidden");
-      passwordForm.classList.add("hidden");
+    function showTab(which) {
+      const magic = which === "magic";
+      tabMagic.setAttribute("aria-selected", String(magic));
+      tabPassword.setAttribute("aria-selected", String(!magic));
+      magicForm.classList.toggle("hidden", !magic);
+      magicForm.style.display = magic ? "grid" : "none";
+      passwordForm.classList.toggle("hidden", magic);
+      passwordForm.style.display = magic ? "none" : "grid";
       status.textContent = "";
-    };
+    }
+    tabMagic.onclick = () => showTab("magic");
+    tabPassword.onclick = () => showTab("password");
+    showTab("magic");
 
-    tabPassword.onclick = () => {
-      tabPassword.classList.add("border-emerald-500", "text-emerald-300");
-      tabPassword.classList.remove("border-transparent", "text-slate-400");
-      tabMagic.classList.remove("border-emerald-500", "text-emerald-300");
-      tabMagic.classList.add("border-transparent", "text-slate-400");
-      passwordForm.classList.remove("hidden");
-      magicForm.classList.add("hidden");
-      status.textContent = "";
-    };
-
-    // Magic link submission
     magicForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       status.textContent = "Sending magic link…";
@@ -102,22 +84,17 @@
       }
     });
 
-    // Password submission
     passwordForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       status.textContent = "Signing in…";
       const email = document.getElementById("emailPassword").value;
       const password = document.getElementById("password").value;
-
       try {
-        const cfg = await fetch("/api/config", { cache: "no-store" }).then(r => r.json());
+        const cfg = await fetch("/api/config", { cache: "no-store" }).then((r) => r.json());
         const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
         const supabase = createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
-
         const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-
-        // Store token and redirect
         localStorage.setItem("geoxis.session.access_token", data.session.access_token);
         location.href = safeNext;
       } catch (err) {
@@ -128,10 +105,7 @@
     document.getElementById("apixisSignIn").href = "/auth/apixis/start?next=" + encodeURIComponent(safeNext);
     const apixisError = params.get("error");
     if (apixisError) status.textContent = "Apixis sign-in did not finish (" + apixisError + "). Try again.";
-
-    // Consume any hash-based token on page load (magic link, or Sign in with Apixis → go straight to next)
     if (consumeAuthHash()) location.replace(safeNext);
   </script>
-  <script type="module" src="/src/ixisCompanies.js"></script>
 </body>
 </html>
