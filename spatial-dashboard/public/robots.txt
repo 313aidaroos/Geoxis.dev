@@ -3,4 +3,4 @@ Disallow: /admin
 Disallow: /api/
 Disallow: /auth/
 Disallow: /set-password
-Sitemap: https://geoxis.vercel.app/sitemap.xml
+Sitemap: https://geoxis.apixis.dev/sitemap.xml

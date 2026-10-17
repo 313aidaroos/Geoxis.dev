@@ -3,7 +3,7 @@
 // pageshow, so the number updates on return from Apixis Wallet. Signed out or not linked → "Sign in with Apixis".
 import { getToken } from "./authClient.js";
 
-const BUY = "https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=" + encodeURIComponent("https://spatial-dashboard-xi.vercel.app/");
+const BUY = "https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=" + encodeURIComponent("https://geoxis.apixis.dev/");
 
 function build() {
   const wrap = document.createElement("span");

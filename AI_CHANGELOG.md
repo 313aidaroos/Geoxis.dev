@@ -122,3 +122,8 @@ Entry format:
 - Not changed: billing (Wallet redeem, Stripe draft), auth flow, Supabase schema, Cixy persona text, the feed React client (skinned through its class map only), `docs/INGEST.md`.
 - Why: Awad asked for the redesign on 2026-10-17 and answered the design questions in chat (spin, day/night, fade-on-select, routes for the selected asset, Cixy on the right, 30-min timeline, universe background).
 - Needs Awad: review the PR; optional env for better live data: `OPENSKY_CLIENT_ID` + `OPENSKY_CLIENT_SECRET` (free account → aircraft refresh every 90 s instead of 15 min), `AISSTREAM_API_KEY` (free → live ships); `public/brand/cixy.png` for the Cixy avatar; point `geoxis.vercel.app` at the project (Vercel refused on 2026-10-06: owned by another project). Undo: close the PR or `git revert` its squash commit.
+
+## 2026-10-17 (later) — Claude (Claude Code)
+- Changed: canonical site URL is now `https://geoxis.apixis.dev` everywhere the code and pages name the site (meta/OG/canonical tags, robots, sitemap, brand.json domain, `/companies` card, INGEST example, the Apixis login `siteUrl()` fallback and the wallet pill return URL). The Vercel alias `spatial-dashboard-xi.vercel.app` stays as a fallback.
+- Why: Awad: "the site now is Geoxis.apixis.dev".
+- Needs Awad / hub: set `APP_URL=https://geoxis.apixis.dev` in Vercel, and add `https://geoxis.apixis.dev/auth/apixis/callback` to the Wallet's `geoxis` client `redirect_uris` (today only the spatial-dashboard-xi URLs are registered, see NOTES/GROK.md 2026-10-06), otherwise Sign in with Apixis on the new domain is refused by the Wallet. Undo: `git revert` this commit.

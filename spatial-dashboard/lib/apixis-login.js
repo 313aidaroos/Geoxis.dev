@@ -9,7 +9,7 @@ import { envConfig } from "./supabaseServer.js";
 const STATE_COOKIE = "apixis_login";
 
 export function siteUrl() {
-  return (process.env.APP_URL || "https://spatial-dashboard-xi.vercel.app").replace(/\/$/, "");
+  return (process.env.APP_URL || "https://geoxis.apixis.dev").replace(/\/$/, "");
 }
 
 export function callbackUrl() {

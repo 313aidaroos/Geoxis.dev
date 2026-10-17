@@ -30,7 +30,7 @@ await fetch("/api/ingest-keys", {
 ## 2. Post positions
 
 ```bash
-curl -X POST https://spatial-dashboard-xi.vercel.app/api/positions \
+curl -X POST https://geoxis.apixis.dev/api/positions \
   -H "Authorization: Bearer gxk_…" \
   -H "Content-Type: application/json" \
   -d '{
