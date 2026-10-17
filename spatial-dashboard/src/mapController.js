@@ -83,14 +83,20 @@ export class GeospatialMap {
       shouldAnimate: true,
       requestRenderMode: false,
       terrain: undefined,
-      imageryProvider: await Cesium.ArcGisMapServerImageryProvider.fromUrl(
-        "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"
-      ),
+      baseLayer: false,
     });
 
     const scene = this.viewer.scene;
     scene.globe.enableLighting = false;
-    scene.globe.baseColor = Cesium.Color.fromCssColorString("#0f1117");
+    scene.globe.baseColor = Cesium.Color.fromCssColorString("#0b356c");
+    // The ellipsoid remains visible even when third-party imagery fails or is blocked.
+    try {
+      const imagery = await Cesium.ArcGisMapServerImageryProvider.fromUrl("https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+      this.viewer.imageryLayers.addImageryProvider(imagery);
+    } catch (error) {
+      console.warn("[map] Satellite imagery unavailable; using visible globe fallback", error);
+      this.#setStatus("Satellite imagery unavailable — displaying globe fallback.");
+    }
     scene.backgroundColor = Cesium.Color.fromCssColorString("#0f1117");
     scene.skyAtmosphere.show = true;
     scene.fog.enabled = true;
