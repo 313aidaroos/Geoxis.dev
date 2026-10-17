@@ -14,7 +14,7 @@ export function mountCixy(root, { store, onShowAircraft } = {}) {
       </div>
       <div class="panel-body" style="display:grid;gap:10px;min-height:0;flex:1">
         <div class="head-row">
-          <div class="avatar"><img src="/brand/cixy.png" alt="Cixy" data-avatar /></div>
+          <div class="avatar"><img src="/cixy/cixy-geoxis-avatar.webp" alt="Cixy" data-avatar /></div>
           <div class="bubble">Hi! I'm <b>Cixy</b> 👋<br>Ask me anything about your fleet, assets, routes, or global operations.</div>
         </div>
         <div class="chips">${CHIPS.map((c) => `<button type="button" data-chip>${c}</button>`).join("")}</div>
