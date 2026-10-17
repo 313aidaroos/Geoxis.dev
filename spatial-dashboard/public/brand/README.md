@@ -18,6 +18,8 @@ Official Geoxis logo, cut out from Awad's original artwork (`logo-reference.png`
 | `facebook-cover.png` | Facebook cover, 1640x624. |
 | `facebook-profile.png` | Facebook profile picture, 720x720. |
 | `og-image.png` | 1200x630 social card, logo on the dark surface with an emerald rule. |
+| `cixy.png` | Cixy, the family AI: square face crop (512px) used in the Cixy panel avatar. Awad's artwork, 2026-10-17. |
+| `cixy-full.png` | Cixy at her desk, the full portrait (720px). |
 
 Follows `/workspace/brand-kits/BRAND_KIT_STANDARD.md`. All standard files are present.
 
