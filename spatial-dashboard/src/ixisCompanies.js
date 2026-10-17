@@ -8,17 +8,17 @@ export const IXIS_COMPANIES = [
   { name: "Apixis", url: "https://www.apixis.dev" },
   { name: "Apixis Wallet", url: "https://apixis-wallet.vercel.app" },
   { name: "Socixis", url: "https://socixis.dev" },
-  { name: "Lyrixis", url: "https://lyrixis.vercel.app" },
+  { name: "Lyrixis", url: "https://lyrixis.apixis.dev" },
   { name: "Pinixis", url: "https://pinixis.vercel.app" },
   { name: "Renoxis", url: "https://renoxis.dev" },
   { name: "Contraxis", url: "https://contraxis-dev.vercel.app" },
-  { name: "Deduxis", url: "https://deduxis.vercel.app" },
+  { name: "Deduxis", url: "https://deduxis.apixis.dev" },
   { name: "Rawixis", url: "https://rawixis.vercel.app" },
-  { name: "Halaxis", url: "https://halaxis.vercel.app" },
-  { name: "Launchixis", url: "https://launchixis.vercel.app" },
+  { name: "Halaxis", url: "https://halaxis.apixis.dev" },
+  { name: "Launchixis", url: "https://launchixis.apixis.dev" },
   { name: "Recovra", url: "https://recovra-three.vercel.app" },
-  { name: "Ominix", url: "https://ominix-app.vercel.app" },
-  { name: "Wattixis", url: "https://wattixis.vercel.app" },
+  { name: "Ominix", url: "https://ominixis.apixis.dev" },
+  { name: "Wattixis", url: "https://wattixis.apixis.dev" },
 ];
 
 export function renderIxisCompanies(root = document) {
