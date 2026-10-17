@@ -23,3 +23,11 @@ Implement in the existing Vite/Cesium app. Avoid replacing working data infrastr
 - Use correctly scaled or symbolic 3D aircraft/ship/truck models in Cesium; animate transitions only between timestamped observations. Mark interpolated visuals as interpolated, not new telemetry.
 - Click asset marker/model to focus camera, highlight actual trail and open expandable identity panel. Provide follow/unfollow, close and copy-ID controls; avoid confusing a globe click with an asset selection.
 - All identifiers and status fields must have explicit unavailable/unknown fallback. Demo labels remain visible for synthetic assets.
+
+## Live metrics integrity (mandatory)
+- All dashboard KPI cards, side-panel totals, trends, routes, country coverage, status badges and detail statistics must derive from timestamped provider/API records; no hardcoded showcase numbers in production.
+- Define count semantics and deduplicate assets by provider-specific stable IDs. Aircraft count = currently valid observed aircraft; ship count = valid AIS-observed vessels; truck count = connected authorized fleet vehicles; route count = routes actually present in data. Never sum unrelated counts into misleading totals.
+- Show feed provenance, coverage, UTC last-success time, freshness threshold and errors. Distinguish LIVE, DELAYED, STALE, DEMO, UNAVAILABLE. Provider outages cannot leave stale numbers labeled live.
+- Derive chart history only from persisted observations; suppress unsupported KPIs (e.g. uptime, percentage changes, container counts) until backed by actual measurements. Display zero only for verified zero, otherwise unavailable.
+- Real-time means near-real-time according to provider cadence; never imply guaranteed instantaneous worldwide coverage. No synthetic worldwide shipping/truck coverage.
+- Add automated tests for deduplication, stale-feed handling, provider failure, partial coverage and no-placeholder production metrics.
