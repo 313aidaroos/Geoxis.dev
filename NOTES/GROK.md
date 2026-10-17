@@ -336,3 +336,7 @@ Recorded by Grok (Developer Bot, notes and status sync at 12:25 AM CT on Oct 5).
 - What: `/api/config` adds `ownerEmails` (both master admins; `ownerEmail` kept for old clients). Draft `terms.html` + `privacy.html` (in theme, `noindex`, marked draft for Awad), added to `vite.config.js` inputs. `public/robots.txt` + `public/sitemap.xml`. Meta description/OG tags on index, pricing, track. README Meridian line fixed.
 - Who: Geoxis Lead (Grok). Theme unchanged, no SVGs.
 - Undo: revert the PR's squash commit.
+
+## 2026-10-17 — Geoxis Lead (Grok): official logo + /brand kit (branch `geoxis-lead/official-logo`, PR not merged, awaiting Awad)
+- What: Clean cutout of Awad's official logo (real pixels from `logo-reference.png`, background removed with rembg isnet + alpha cleanup, no redraw). Kit in `spatial-dashboard/public/brand/` (logo-full, logo-full-white, logo-header, mark, mark-white, favicon.ico/-32, apple-touch-icon, icon-192/512, site.webmanifest, og-image, README with colours + dos/don'ts). Header logo on every page replaces the old inline globe SVG / "◎" glyph + "Geoxis" text (subtitle, nav, theme, Special Elite unchanged); header-less pages (login, support, admin, set-password, terms, privacy, auth callback) get the logo above their content. Favicon, apple-touch, manifest, theme-color, og:image and twitter:image (summary_large_image) on all HTML pages. Screenshots in `docs/screenshots/official-logo/`.
+- Who: Geoxis Lead (Grok). Undo: revert the PR.

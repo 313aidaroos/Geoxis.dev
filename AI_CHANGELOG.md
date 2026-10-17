@@ -113,3 +113,4 @@ Entry format:
 - Why: launch-next draft for Awad, built on the Stripe checkout branch. Undo: revert this PR.
 
 ## 2026-10-14 — Geoxis Lead (Grok): launch polish (config owners, draft terms/privacy, robots/sitemap, meta tags, README). Undo: revert the PR.
+- 2026-10-17 — Geoxis Lead (Grok): official Geoxis logo cutout + `public/brand/` kit, header logo/favicons/og:image on all pages (branch `geoxis-lead/official-logo`, unmerged). Undo: revert the PR.
