@@ -6,19 +6,20 @@ export const IXIS_COMPANIES = [
   // (lib/marketing/ixis-companies.ts) and this site's /companies page (same names, URLs, order),
   // minus Geoxis itself. Nursery Toons and Qahwah World stay out (Awad, 9/29).
   { name: "Apixis", url: "https://www.apixis.dev" },
-  { name: "Apixis Wallet", url: "https://apixis-wallet.vercel.app" },
+  { name: "Apixis Wallet", url: "https://wallet.apixis.dev" },
   { name: "Socixis", url: "https://socixis.dev" },
   { name: "Lyrixis", url: "https://lyrixis.apixis.dev" },
-  { name: "Pinixis", url: "https://pinixis.vercel.app" },
+  { name: "Pinixis", url: "https://pinixis.dev" },
   { name: "Renoxis", url: "https://renoxis.dev" },
-  { name: "Contraxis", url: "https://contraxis-dev.vercel.app" },
+  { name: "Contraxis", url: "https://contraxis.dev" },
   { name: "Deduxis", url: "https://deduxis.apixis.dev" },
-  { name: "Rawixis", url: "https://rawixis.vercel.app" },
+  { name: "Rawixis", url: "https://rawixis.dev" },
   { name: "Halaxis", url: "https://halaxis.apixis.dev" },
   { name: "Launchixis", url: "https://launchixis.apixis.dev" },
   { name: "Recovra", url: "https://recovra-three.vercel.app" },
-  { name: "Ominix", url: "https://ominixis.apixis.dev" },
+  { name: "Ominixis", url: "https://ominixis.apixis.dev" },
   { name: "Wattixis", url: "https://wattixis.apixis.dev" },
+  { name: "Newsxis", url: "https://newsxis.apixis.dev" },
 ];
 
 export function renderIxisCompanies(root = document) {
