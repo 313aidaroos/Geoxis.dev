@@ -115,3 +115,4 @@ Entry format:
 ## 2026-10-14 — Geoxis Lead (Grok): launch polish (config owners, draft terms/privacy, robots/sitemap, meta tags, README). Undo: revert the PR.
 - 2026-10-17 — Geoxis Lead (Grok): official Geoxis logo cutout + `public/brand/` kit, header logo/favicons/og:image on all pages (branch `geoxis-lead/official-logo`, unmerged). Undo: revert the PR.
 - 2026-10-17 — Geoxis Lead (Grok): brand kit aligned to BRAND_KIT_STANDARD (brand.json added; logo-header.png and site.webmanifest removed; banner/facebook files pending). Undo: revert the PR.
+- 2026-10-17 — Geoxis Lead (Grok): brand kit complete (banner, facebook cover/profile), logo-full.png 686→80 KB at 1024px, domain geoxis.dev in brand.json/og:image. Undo: revert the PR.

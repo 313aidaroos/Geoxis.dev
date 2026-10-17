@@ -6,7 +6,7 @@ Official Geoxis logo, cut out from Awad's original artwork (`logo-reference.png`
 
 | File | Use |
 | --- | --- |
-| `logo-full.png` | Mark + wordmark, transparent, 1600px wide. Default logo. |
+| `logo-full.png` | Mark + wordmark, transparent, 1024px wide (pngquant + oxipng compressed, ~80 KB). Default logo, also used in site headers. |
 | `logo-full-white.png` | White silhouette of the full logo (one-colour use, photos, emboss). |
 | `mark.png` | Globe "G" only, transparent, 1024px. Avatars, small spaces. |
 | `mark-white.png` | White silhouette of the mark. |
@@ -14,9 +14,12 @@ Official Geoxis logo, cut out from Awad's original artwork (`logo-reference.png`
 | `apple-touch-icon.png` | 180x180, mark on `#0f1117`. |
 | `icon-192.png`, `icon-512.png` | Large app icons (Android / PWA). |
 | `brand.json` | Name, domain, tagline, colours, fonts and file map. Read colours from here. |
+| `banner.png` | Wide feature banner (3072x1170): logo + name left, features right. |
+| `facebook-cover.png` | Facebook cover, 1640x624. |
+| `facebook-profile.png` | Facebook profile picture, 720x720. |
 | `og-image.png` | 1200x630 social card, logo on the dark surface with an emerald rule. |
 
-Follows `/workspace/brand-kits/BRAND_KIT_STANDARD.md`. `banner.png`, `facebook-cover.png` (1640x624) and `facebook-profile.png` (720x720) are not made yet and will be added later.
+Follows `/workspace/brand-kits/BRAND_KIT_STANDARD.md`. All standard files are present.
 
 Site headers use `logo-full.png` scaled down in CSS (`h-6`/`h-7`); there is no separate header file.
 
