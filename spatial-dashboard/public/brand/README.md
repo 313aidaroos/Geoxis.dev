@@ -8,13 +8,17 @@ Official Geoxis logo, cut out from Awad's original artwork (`logo-reference.png`
 | --- | --- |
 | `logo-full.png` | Mark + wordmark, transparent, 1600px wide. Default logo. |
 | `logo-full-white.png` | White silhouette of the full logo (one-colour use, photos, emboss). |
-| `logo-header.png` | 96px-tall copy of `logo-full.png` for site headers (light payload). |
 | `mark.png` | Globe "G" only, transparent, 1024px. Avatars, small spaces. |
 | `mark-white.png` | White silhouette of the mark. |
 | `favicon.ico`, `favicon-32.png` | Browser tab icons (16/32/48/64). |
 | `apple-touch-icon.png` | 180x180, mark on `#0f1117`. |
-| `icon-192.png`, `icon-512.png` | PWA / manifest icons (`site.webmanifest`). |
+| `icon-192.png`, `icon-512.png` | Large app icons (Android / PWA). |
+| `brand.json` | Name, domain, tagline, colours, fonts and file map. Read colours from here. |
 | `og-image.png` | 1200x630 social card, logo on the dark surface with an emerald rule. |
+
+Follows `/workspace/brand-kits/BRAND_KIT_STANDARD.md`. `banner.png`, `facebook-cover.png` (1640x624) and `facebook-profile.png` (720x720) are not made yet and will be added later.
+
+Site headers use `logo-full.png` scaled down in CSS (`h-6`/`h-7`); there is no separate header file.
 
 ## Colours
 

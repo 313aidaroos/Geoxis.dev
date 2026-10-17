@@ -1,0 +1,24 @@
+{
+  "name": "Geoxis",
+  "domain": "spatial-dashboard-xi.vercel.app",
+  "tagline": "Watch the world move in live 3D.",
+  "colors": {
+    "primary": "#34d399",
+    "accent": "#22f27c",
+    "background": "#0f1117",
+    "text": "#e2e8f0"
+  },
+  "fonts": ["Special Elite"],
+  "files": {
+    "logo-full": "logo-full.png",
+    "logo-full-white": "logo-full-white.png",
+    "mark": "mark.png",
+    "mark-white": "mark-white.png",
+    "favicon": "favicon.ico",
+    "favicon-32": "favicon-32.png",
+    "apple-touch-icon": "apple-touch-icon.png",
+    "icon-192": "icon-192.png",
+    "icon-512": "icon-512.png",
+    "og-image": "og-image.png"
+  }
+}
