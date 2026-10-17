@@ -118,7 +118,7 @@ export class UIController {
     }
 
     li.querySelector(".name").textContent = a.name;
-    li.querySelector(".sub").textContent = `${a.id} · ${a.destination}`;
+    li.querySelector(".sub").textContent = [a.callsign || a.registration || a.imo || a.mmsi || a.id, a.destination].filter(Boolean).join(" · ");
     li.querySelector(".speed").textContent = speed;
     li.querySelector(".hdg").textContent = `${Math.round(a.heading)}°`;
     li.dataset.alarm = a.alarm ? "true" : "false";
@@ -142,7 +142,7 @@ export class UIController {
   #applyFilter() {
     for (const [id, li] of this.rows) {
       const a = this.state.assets.get(id);
-      const hay = `${a?.name ?? ""} ${id} ${a?.destination ?? ""} ${a?.operator ?? ""}`.toLowerCase();
+      const hay = [a?.name,id,a?.destination,a?.operator,a?.callsign,a?.registration,a?.imo,a?.mmsi,a?.vehicleId].filter(Boolean).join(" ").toLowerCase();
       li.classList.toggle("hidden", Boolean(this.searchTerm) && !hay.includes(this.searchTerm));
     }
   }
