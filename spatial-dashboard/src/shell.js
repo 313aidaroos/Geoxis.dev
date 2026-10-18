@@ -2,7 +2,7 @@
 // family footer. Pages drop <header data-shell data-active="pricing"></header> and
 // <footer data-shell-footer></footer> and import this module. Nothing here touches billing.
 import { getToken, loadMe, clearSession } from "./authClient.js";
-import { IXIS_COMPANIES } from "./ixisCompanies.js";
+import { renderIxisCompanies } from "./ixisCompanies.js";
 
 export const NAV = [
   { key: "overview", label: "Overview", href: "/" },
@@ -129,10 +129,10 @@ export function mountShell({ active = "", search = true } = {}) {
     footer.className = "gx-footer";
     footer.innerHTML = `
       <div class="gx-footer-inner">
-        <span class="label">Other Ixis companies</span>
-        <nav aria-label="Other Ixis companies">${IXIS_COMPANIES.map((c) => `<a href="${c.url}" target="_blank" rel="noopener">${c.name}</a>`).join("")}</nav>
+        <div data-ixis-companies></div>
         <span class="legal"><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/support">Support</a><span class="dim">© Apixis Dev LLC</span></span>
       </div>`;
+    renderIxisCompanies(footer);
   }
 }
 

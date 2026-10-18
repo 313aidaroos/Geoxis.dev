@@ -1,46 +1,32 @@
-// Other Ixis companies (2026-09-29, Geoxis Lead / Grok). The ONE place the list lives:
-// edit a URL here and every Geoxis footer updates. Geoxis itself is intentionally left out.
-// Renders plain links into any element with a `data-ixis-companies` attribute.
-export const IXIS_COMPANIES = [
-  // 2026-10-04 (Geoxis Lead / Grok, hub order): full family list, matching Rawixis.dev's footer
-  // (lib/marketing/ixis-companies.ts) and this site's /companies page (same names, URLs, order),
-  // minus Geoxis itself. Nursery Toons and Qahwah World stay out (Awad, 9/29).
-  { name: "Apixis", url: "https://www.apixis.dev" },
-  { name: "Apixis Wallet", url: "https://wallet.apixis.dev" },
-  { name: "Socixis", url: "https://socixis.dev" },
-  { name: "Lyrixis", url: "https://lyrixis.apixis.dev" },
-  { name: "Pinixis", url: "https://pinixis.dev" },
-  { name: "Renoxis", url: "https://renoxis.dev" },
-  { name: "Contraxis", url: "https://contraxis.dev" },
-  { name: "Deduxis", url: "https://deduxis.apixis.dev" },
-  { name: "Rawixis", url: "https://rawixis.dev" },
-  { name: "Halaxis", url: "https://halaxis.apixis.dev" },
-  { name: "Launchixis", url: "https://launchixis.apixis.dev" },
-  { name: "Recovra", url: "https://recovra-three.vercel.app" },
-  { name: "Ominixis", url: "https://ominixis.apixis.dev" },
-  { name: "Wattixis", url: "https://wattixis.apixis.dev" },
-  { name: "Newsxis", url: "https://newsxis.apixis.dev" },
-];
-
-export function renderIxisCompanies(root = document) {
-  root.querySelectorAll("[data-ixis-companies]").forEach((el) => {
-    el.replaceChildren(
-      ...IXIS_COMPANIES.map(({ name, url }) => {
-        const a = document.createElement("a");
-        a.href = url;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.textContent = name;
-        // Same muted link style as the sidebar nav (Login / Support / Admin); py-1 keeps taps easy on mobile.
-        a.className = "ix-link";
-        return a;
-      }),
-    );
-  });
+// ES module.
+/* Footer "Ixis companies" card. Same list, briefs and URLs as Deduxis.dev PR #10.
+   Put <div data-ixis-companies data-align="left|right"></div> in the footer; this script fills it.
+   Hover or focus opens a card (desktop); tap opens a bottom sheet (mobile); outside click or Esc closes. */
+export const IXIS_COMPANIES = [{"name": "Apixis", "brief": "Virtual world and economy for AI agents.", "url": "https://www.apixis.dev"}, {"name": "Apixis Wallet", "brief": "One wallet for payments across the Ixis family.", "url": "https://wallet.apixis.dev"}, {"name": "Socixis", "brief": "AI marketing and social media agent.", "url": "https://socixis.dev"}, {"name": "Renoxis", "brief": "Real estate personal assistant.", "url": "https://renoxis.dev"}, {"name": "Rawixis", "brief": "Marketplace for raw materials.", "url": "https://rawixis.dev"}, {"name": "Contraxis", "brief": "Connects homeowners and contractors with AI.", "url": "https://contraxis.dev"}, {"name": "Pinixis", "brief": "Custom arcade and pinball machines, built to order.", "url": "https://pinixis.dev"}, {"name": "Ominixis", "brief": "Marketplace and transaction layer for the AI economy.", "url": "https://ominixis.apixis.dev"}, {"name": "Lyrixis", "brief": "Music metadata, lyrics, and catalog intelligence.", "url": "https://lyrixis.apixis.dev"}, {"name": "Halaxis", "brief": "Halal and Sharia-compliant investing.", "url": "https://halaxis.apixis.dev"}, {"name": "Geoxis", "brief": "Live 3D map of everything a company has moving.", "url": "https://geoxis.apixis.dev"}, {"name": "Wattixis", "brief": "Marketplace for spare energy.", "url": "https://wattixis.apixis.dev"}, {"name": "Launchixis", "brief": "Launch tools for new companies.", "url": "https://launchixis.apixis.dev"}, {"name": "Newsxis", "brief": "Real-time news from every place on Earth.", "url": "https://newsxis.apixis.dev"}];
+var CURRENT = "Geoxis";
+var THEME = {"--ixis-bg": "#111a33", "--ixis-fg": "#e6ecff", "--ixis-muted": "#aab8e0", "--ixis-accent": "#4f8cff", "--ixis-hover": "#182446", "--ixis-line": "#2d3d6b"};
+var CSS = ".ixis-menu.ixis-menu{position:relative;display:inline-block;font:inherit}\n.ixis-menu.ixis-menu .ixis-trigger{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;cursor:pointer;display:inline-flex;gap:5px;align-items:center}\n.ixis-menu.ixis-menu .ixis-trigger span{font-size:.75em}\n.ixis-menu.ixis-menu:hover .ixis-trigger,.ixis-menu.ixis-menu.is-open .ixis-trigger,.ixis-menu.ixis-menu .ixis-trigger:focus-visible{color:var(--ixis-accent)}\n.ixis-menu.ixis-menu .ixis-panel{position:absolute;left:0;bottom:calc(100% + 12px);width:min(360px,calc(100vw - 32px));max-height:min(440px,70vh);overflow-y:auto;background:var(--ixis-bg);color:var(--ixis-fg);border:1px solid var(--ixis-line);border-radius:14px;box-shadow:0 18px 40px rgba(0,0,0,.28);padding:14px 10px 10px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .15s,transform .15s,visibility .15s;z-index:60;text-align:left;font-size:12px;line-height:1.35;letter-spacing:normal;text-transform:none}\n.ixis-menu.ixis-menu.ixis-right .ixis-panel{left:auto;right:0}\n.ixis-menu.ixis-menu .ixis-panel::after{content:\"\";position:absolute;left:0;right:0;bottom:-14px;height:14px}\n@media (hover:hover){.ixis-menu.ixis-menu:hover .ixis-panel{opacity:1;visibility:visible;transform:none}}\n.ixis-menu.ixis-menu:focus-within .ixis-panel,.ixis-menu.ixis-menu.is-open .ixis-panel{opacity:1;visibility:visible;transform:none}\n.ixis-menu.ixis-menu .ixis-panel-title{margin:0 8px 8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ixis-muted)}\n.ixis-menu.ixis-menu .ixis-panel ul{list-style:none;margin:0;padding:0}\n.ixis-menu.ixis-menu .ixis-panel li{margin:0;padding:0}\n.ixis-menu.ixis-menu .ixis-panel a,.ixis-menu.ixis-menu .ixis-panel .ixis-here{display:grid;gap:2px;padding:8px;border-radius:10px;color:var(--ixis-fg);text-decoration:none}\n.ixis-menu.ixis-menu .ixis-panel a:hover,.ixis-menu.ixis-menu .ixis-panel a:focus-visible{background:var(--ixis-hover)}\n.ixis-menu.ixis-menu .ixis-panel strong{font-size:13px;font-weight:600;color:var(--ixis-fg)}\n.ixis-menu.ixis-menu .ixis-panel .ixis-brief{color:var(--ixis-muted)}\n.ixis-menu.ixis-menu .ixis-panel .ixis-here{background:var(--ixis-hover)}\n.ixis-menu.ixis-menu .ixis-panel .ixis-badge{margin-left:6px;font-size:10px;font-weight:600;color:var(--ixis-accent)}\n@media (max-width:760px){.ixis-menu.ixis-menu .ixis-panel{position:fixed;left:16px;right:16px;bottom:16px;width:auto;max-height:70vh}.ixis-menu.ixis-menu .ixis-panel::after{display:none}}";
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function mount(host) {
+  if (host.getAttribute("data-ixis-ready")) return;
+  host.setAttribute("data-ixis-ready", "1");
+  if (!document.getElementById("ixis-companies-css")) {
+    var st = document.createElement("style"); st.id = "ixis-companies-css"; st.textContent = CSS; document.head.appendChild(st);
+  }
+  host.className = (host.className ? host.className + " " : "") + "ixis-menu" + (host.getAttribute("data-align") === "right" ? " ixis-right" : "");
+  for (var k in THEME) host.style.setProperty(k, THEME[k]);
+  var li = IXIS_COMPANIES.map(function (c) {
+    if (c.name === CURRENT) return '<li><div class="ixis-here" aria-current="page"><strong>' + esc(c.name) + '<span class="ixis-badge">You are here</span></strong><span class="ixis-brief">' + esc(c.brief) + "</span></div></li>";
+    return '<li><a href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer"><strong>' + esc(c.name) + '</strong><span class="ixis-brief">' + esc(c.brief) + "</span></a></li>";
+  }).join("");
+  host.innerHTML = '<button type="button" class="ixis-trigger" aria-expanded="false" aria-controls="ixis-panel">Ixis companies <span aria-hidden="true">\u25B4</span></button>' +
+    '<div id="ixis-panel" class="ixis-panel" role="region" aria-label="Ixis companies"><p class="ixis-panel-title">The Ixis family</p><ul>' + li + "</ul></div>";
+  var btn = host.querySelector(".ixis-trigger");
+  function set(open) { host.classList.toggle("is-open", open); btn.setAttribute("aria-expanded", String(open)); }
+  btn.addEventListener("click", function () { set(!host.classList.contains("is-open")); });
+  document.addEventListener("pointerdown", function (e) { if (!host.contains(e.target)) set(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
 }
+export function renderIxisCompanies(root = document) { var n = root.querySelectorAll("[data-ixis-companies]"); for (var i = 0; i < n.length; i++) mount(n[i]); }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => renderIxisCompanies());
-} else {
-  renderIxisCompanies();
-}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => renderIxisCompanies()); else renderIxisCompanies();
