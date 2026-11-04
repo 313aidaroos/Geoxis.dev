@@ -22,10 +22,10 @@ export default async function handler(req, res) {
     if (req.method === "PATCH") {
       const body = await readBody(req);
       if (!body.id) return sendJson(res, 400, { error: "missing_id" });
-      const updates = {};
-      if (body.status) updates.status = body.status;
-      if (body.reply) updates.reply = body.reply;
-      const updated = await updateSupportTicket(body.id, updates);
+      // Only `status` is a column on support_tickets; a `reply` field used to be forwarded and 400ed in PostgREST.
+      const status = String(body.status || "");
+      if (!["open", "triaged", "closed"].includes(status)) return sendJson(res, 400, { error: "invalid_status" });
+      const updated = await updateSupportTicket(body.id, { status });
       return sendJson(res, 200, { ticket: updated }, { "Cache-Control": "no-store" });
     }
 

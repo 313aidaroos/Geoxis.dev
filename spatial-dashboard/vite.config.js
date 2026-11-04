@@ -1,62 +1,52 @@
 import { defineConfig } from "vite";
 import { resolve } from "path";
+import { existsSync } from "fs";
+import { pathToFileURL } from "url";
 import cesium from "vite-plugin-cesium";
-import { loadEnv } from "vite";
 
+// Dev only: serve every Vercel function under api/ so `vite` behaves like production
+// (/api/assets, /api/air, /api/ships, /api/aircraft, /api/config, /api/me, …).
 function geoxisApi() {
-  const routes = {
-    "/api/assets": () => import("./api/assets.js"),
-    "/api/config": () => import("./api/config.js"),
-    "/api/me": () => import("./api/me.js"),
-    "/api/cixy": () => import("./api/cixy.js"),
-    "/api/support": () => import("./api/support.js"),
-    "/api/admin/support": () => import("./api/admin/support.js"),
-    "/api/redeem": () => import("./api/redeem.js"),
-    "/api/wallet/balance": () => import("./api/wallet/balance.js"),
-    "/api/world/provision": () => import("./api/world/provision.js"),
-    "/auth/apixis/start": () => import("./api/auth/apixis/start.js"),
-    "/auth/apixis/callback": () => import("./api/auth/apixis/callback.js"),
+  return {
+    name: "geoxis-api",
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        const path = req.url?.split("?")[0] || "";
+        if (!path.startsWith("/api/")) return next();
+        const rel = path.slice(5).replace(/\/+$/, "").replace(/[^a-zA-Z0-9/_-]/g, "");
+        const file = resolve(__dirname, "api", `${rel}.js`);
+        if (!rel || !existsSync(file)) return next();
+        try {
+          const mod = await import(`${pathToFileURL(file).href}?t=${Date.now()}`);
+          // Express-style helpers a few handlers use.
+          res.status = (code) => { res.statusCode = code; return res; };
+          res.json = (body) => { res.setHeader("Content-Type", "application/json; charset=utf-8"); res.end(JSON.stringify(body)); };
+          await mod.default(req, res);
+        } catch (err) {
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "application/json");
+          res.end(JSON.stringify({ error: String(err?.message || err) }));
+        }
+      });
+    },
   };
-  const install = (server) => { server.middlewares.use(async (req, res, next) => {
-    const load = routes[req.url?.split("?")[0]];
-    if (!load) return next();
-    try {
-      const { default: handler } = await load();
-      await handler(req, res);
-    } catch (err) {
-      res.statusCode = err.status || 500;
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify({ error: "request_failed" }));
-    }
-  });
-  };
-  return { name: "geoxis-api", configureServer: install, configurePreviewServer: install };
 }
 
 function cesiumInBody() {
   return {
     name: "geoxis-cesium-body",
     transformIndexHtml(html) {
-      const withoutHeadCesium = html.replace(
-        /<script src="[^"]*Cesium\.js"><\/script>\s*/g,
-        "",
-      );
+      const withoutHeadCesium = html.replace(/<script src="[^"]*Cesium\.js"><\/script>\s*/g, "");
       if (withoutHeadCesium.includes("Cesium.js")) return withoutHeadCesium;
-      return withoutHeadCesium.replace(
-        '<script type="module"',
-        '<script src="/cesium/Cesium.js" defer></script>\n  <script type="module"',
-      );
+      return withoutHeadCesium.replace('<script type="module"', '<script src="/cesium/Cesium.js" defer></script>\n  <script type="module"');
     },
   };
 }
 
-export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
-  for (const [key, value] of Object.entries(env)) process.env[key] ??= value;
-  return {
-    plugins: [cesium(), geoxisApi(), cesiumInBody()],
-    server: { port: 5173, open: false },
-    preview: { port: 4173 },
+export default defineConfig({
+  plugins: [cesium(), geoxisApi(), cesiumInBody()],
+  server: { port: 5173, open: false },
+  preview: { port: 4173 },
   build: {
     target: "es2022",
     sourcemap: true,
@@ -67,10 +57,13 @@ export default defineConfig(({ mode }) => {
         support: resolve(__dirname, "support.html"),
         admin: resolve(__dirname, "admin.html"),
         pricing: resolve(__dirname, "pricing.html"),
-        password: resolve(__dirname, "set-password.html"),
-        callback: resolve(__dirname, "auth/callback.html"),
+        track: resolve(__dirname, "track.html"),
+        fleet: resolve(__dirname, "fleet.html"),
+        setPassword: resolve(__dirname, "set-password.html"),
+        authCallback: resolve(__dirname, "auth/callback.html"),
+        terms: resolve(__dirname, "terms.html"),
+        privacy: resolve(__dirname, "privacy.html"),
       },
     },
   },
-  };
 });

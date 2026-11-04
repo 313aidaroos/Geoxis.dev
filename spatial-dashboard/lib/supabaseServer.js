@@ -58,12 +58,17 @@ export async function getUserFromBearer(token) {
   return sbFetch("/auth/v1/user", { token });
 }
 
+export async function selectMany(table, query) {
+  const rows = await sbFetch(`/rest/v1/${table}?${query}`, { service: true });
+  return Array.isArray(rows) ? rows : [];
+}
+
 async function selectOne(table, query) {
   const rows = await sbFetch(`/rest/v1/${table}?${query}&limit=1`, { service: true });
   return Array.isArray(rows) ? rows[0] ?? null : null;
 }
 
-async function insertOne(table, row) {
+export async function insertOne(table, row) {
   const rows = await sbFetch(`/rest/v1/${table}`, {
     method: "POST",
     service: true,
@@ -73,7 +78,7 @@ async function insertOne(table, row) {
   return Array.isArray(rows) ? rows[0] : rows;
 }
 
-async function upsert(table, row, onConflict) {
+export async function upsert(table, row, onConflict) {
   const q = onConflict ? `?on_conflict=${encodeURIComponent(onConflict)}` : "";
   const rows = await sbFetch(`/rest/v1/${table}${q}`, {
     method: "POST",
@@ -82,6 +87,44 @@ async function upsert(table, row, onConflict) {
     headers: { Prefer: "resolution=merge-duplicates,return=representation" },
   });
   return Array.isArray(rows) ? rows[0] : rows;
+}
+
+/** Upsert many rows at once (row is an array). Returns the representation rows. */
+export async function upsertMany(table, rows, onConflict) {
+  if (!rows.length) return [];
+  const q = onConflict ? `?on_conflict=${encodeURIComponent(onConflict)}` : "";
+  const out = await sbFetch(`/rest/v1/${table}${q}`, {
+    method: "POST",
+    service: true,
+    body: rows,
+    headers: { Prefer: "resolution=merge-duplicates,return=representation" },
+  });
+  return Array.isArray(out) ? out : [];
+}
+
+export async function insertMany(table, rows) {
+  if (!rows.length) return [];
+  const out = await sbFetch(`/rest/v1/${table}`, {
+    method: "POST",
+    service: true,
+    body: rows,
+    headers: { Prefer: "return=representation" },
+  });
+  return Array.isArray(out) ? out : [];
+}
+
+export async function patchWhere(table, query, updates) {
+  const rows = await sbFetch(`/rest/v1/${table}?${query}`, {
+    method: "PATCH",
+    service: true,
+    body: updates,
+    headers: { Prefer: "return=representation" },
+  });
+  return Array.isArray(rows) ? rows : [];
+}
+
+export async function deleteWhere(table, query) {
+  await sbFetch(`/rest/v1/${table}?${query}`, { method: "DELETE", service: true });
 }
 
 export async function ensureUserTenant(user) {
@@ -102,7 +145,8 @@ export async function ensureUserTenant(user) {
 
   const role = admin ? "owner" : "member";
   await upsert("tenant_memberships", { tenant_id: tenant.id, user_id: user.id, email, role }, "tenant_id,user_id");
-  return { user: { id: user.id, email }, tenant, role, admin };
+  // Keep app_metadata so billing can use the Apixis ID sub (family rule: sub first, else verified email).
+  return { user: { id: user.id, email, app_metadata: user.app_metadata || {} }, tenant, role, admin };
 }
 
 export async function authContext(req, { includeAuthUser = false } = {}) {

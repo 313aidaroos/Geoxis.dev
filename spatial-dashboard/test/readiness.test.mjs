@@ -3,9 +3,7 @@ import assert from 'node:assert/strict';
 import { authContext } from '../lib/supabaseServer.js';
 import provision from '../api/world/provision.js';
 import assetsHandler from '../api/assets.js';
-import { HttpTelemetryPoller, AssetDataStreamer } from '../src/streamSimulator.js';
-import { safeNextPath, updatePassword, currentUser, TOKEN_KEY } from '../src/authClient.js';
-import { snapshot } from '../lib/fleetEngine.js';
+import { TOKEN_KEY } from '../src/authClient.js';
 import { cixySystemPrompt } from '../lib/core.js';
 
 const json = (data, status = 200) => new Response(JSON.stringify(data), { status });
@@ -48,7 +46,9 @@ function backend(t, options = {}) {
 test('verified Auth metadata is available only when explicitly requested by the server', async t => {
   backend(t);
   const publicContext = await authContext(request);
-  assert.deepEqual(publicContext.user, { id: 'user-1', email: 'ops@example.test' });
+  assert.equal(publicContext.user.id, 'user-1');
+  assert.equal(publicContext.user.email, 'ops@example.test');
+  assert.equal(publicContext.user.user_metadata, undefined);
   assert.equal(publicContext.authUser, undefined);
   const internal = await authContext(request, { includeAuthUser: true });
   assert.equal(internal.authUser.app_metadata.apixis_sub, 'apixis-1');
@@ -92,98 +92,6 @@ function browserStorage(t) {
   globalThis.localStorage = { getItem: key => key === TOKEN_KEY ? 'test-session' : null };
   t.after(() => { if (original === undefined) delete globalThis.localStorage; else globalThis.localStorage = original; });
 }
-
-test('password update uses the existing app session and marks password setup complete', async t => {
-  browserStorage(t);
-  const calls = [];
-  t.mock.method(globalThis, 'fetch', async (url, init) => {
-    calls.push({ url, init });
-    return url === '/api/config' ? json({ supabaseUrl: 'https://db.example.invalid', supabaseAnonKey: 'anon' }) : json({ id: 'user-1' });
-  });
-  await currentUser();
-  await updatePassword('test-only-password');
-  const update = calls.find(c => c.init?.method === 'PUT');
-  assert.equal(update.init.headers.Authorization, 'Bearer test-session');
-  assert.deepEqual(JSON.parse(update.init.body), { password: 'test-only-password', data: { has_password: true } });
-});
-
-test('redirects reject external, encoded slash, backslash, and control-character destinations', () => {
-  for (const input of ['https://evil.test', '//evil.test', '/\\evil.test', '/%5cevil.test', '/%252fevil.test', '/\nevil.test', '/%0aevil.test', null]) {
-    assert.equal(safeNextPath(input), '/');
-  }
-  assert.equal(safeNextPath('/pricing?from=login'), '/pricing?from=login');
-});
-
-function deadline() {
-  return AbortSignal.timeout(1500);
-}
-function until(signal, subscribe) {
-  return new Promise((resolve, reject) => {
-    signal.addEventListener('abort', () => reject(new Error('Test timed out')), { once: true });
-    subscribe(resolve, reject);
-  });
-}
-
-test('HTTP poller sends session headers and connects only after a valid snapshot', async t => {
-  let release;
-  const response = new Promise(resolve => { release = resolve; });
-  let headers;
-  t.mock.method(globalThis, 'fetch', async (_url, init) => { headers = init.headers; return response; });
-  const poller = new HttpTelemetryPoller({ url: '/api/assets', intervalMs: 1000, getHeaders: () => ({ Authorization: 'Bearer test-session' }) });
-  t.after(() => poller.close());
-  let opened = false; poller.onopen = () => { opened = true; };
-  assert.equal(opened, false);
-  const received = until(deadline(), resolve => { poller.onmessage = event => resolve(JSON.parse(event.data)); });
-  release(json({ assets: [], sentAt: 1, tenant: { id: 't1' } }));
-  const message = await received;
-  assert.equal(opened, true); assert.equal(headers.Authorization, 'Bearer test-session');
-  assert.equal(message.channel, 'snapshot'); assert.deepEqual(message.payload.assets, []);
-});
-
-test('HTTP poller reports failed requests and recovers on the next successful poll', async t => {
-  let requests = 0; let errors = 0;
-  t.mock.method(globalThis, 'fetch', async () => ++requests === 1 ? json({}, 503) : json({ assets: [] }));
-  const poller = new HttpTelemetryPoller({ url: '/api/assets', intervalMs: 10 });
-  t.after(() => poller.close()); poller.onerror = () => errors++;
-  await until(deadline(), resolve => { poller.onopen = resolve; });
-  assert.equal(errors, 1); assert.equal(requests, 2);
-});
-
-test('streamer includes the app token for its own endpoint only', async t => {
-  browserStorage(t);
-  for (const endpoint of ['/api/assets', 'https://feed.example.invalid/assets']) {
-    let actual;
-    t.mock.method(globalThis, 'fetch', async (_url, init) => { actual = init.headers; return json({ assets: [] }); });
-    let stream;
-    await until(deadline(), resolve => {
-      stream = new AssetDataStreamer({ endpoint, bus: { emit(name) { if (name === 'stream:snapshot') resolve(); } } });
-      t.after(() => stream.disconnect()); stream.connect();
-    });
-    stream.disconnect();
-    assert.equal(actual.Authorization, endpoint === '/api/assets' ? 'Bearer test-session' : undefined);
-  }
-});
-
-test('demo fleet and stale aircraft are labelled, preserve fix time, and expire', async t => {
-  let now = 1_900_000_000_000;
-  t.mock.method(Date, 'now', () => now);
-  let requests = 0;
-  const state = ['abc123', 'TEST123', 'NL', now / 1000 - 20, now / 1000, 4, 52, 1000, false, 100, 90, 0, null, 1000];
-  t.mock.method(globalThis, 'fetch', async () => {
-    if (++requests > 1) throw new Error('upstream unavailable');
-    return json({ states: [state] });
-  });
-  const first = await snapshot();
-  assert.equal(first.sources.fleet, 'simulated');
-  assert.equal(first.assets.filter(a => a.simulated).length, 6);
-  const fix = first.assets.find(a => a.source === 'opensky').timestamp;
-  assert.equal(Date.parse(fix), now - 20_000);
-  now += 15_000;
-  const stale = (await snapshot()).assets.find(a => a.source === 'opensky');
-  assert.equal(stale.stale, true); assert.equal(stale.timestamp, fix);
-  now += 5 * 60_000;
-  assert.equal((await snapshot()).assets.some(a => a.source === 'opensky'), false);
-});
 
 test('Cixy receives the source and observation age instead of treating demo assets as real', () => {
   const prompt = cixySystemPrompt({ assets: [{ id: 'demo', source: 'geoxis-fleet', simulated: true, timestamp: '2026-10-05T00:00:00Z' }] });

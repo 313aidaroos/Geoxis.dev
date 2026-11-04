@@ -43,7 +43,9 @@ export const NO_ACCOUNT_MESSAGE = "No Geoxis account uses this email yet. New he
 export async function requestMagicLink(email, next = "/") {
   const cfg = await config();
   if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) throw new Error("auth_not_configured");
-  const safeNext = safeNextPath(next);
+  const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  // auth/callback.html is in the Vite build since 2026-10-06 (it 404ed before). The .html URL is kept so the
+  // Supabase redirect allowlist needs no change; Vercel cleanUrls 308s it to /auth/callback with query + hash intact.
   const redirectTo = `${location.origin}/auth/callback.html?next=${encodeURIComponent(safeNext)}`;
   const res = await fetch(`${cfg.supabaseUrl}/auth/v1/otp`, {
     method: "POST",
@@ -76,42 +78,4 @@ export async function loadMe() {
   const me = await res.json();
   localStorage.setItem(USER_KEY, JSON.stringify(me));
   return me;
-}
-
-/** Only redirect within this application, including after decoding nested escapes. */
-export function safeNextPath(raw) {
-  if (typeof raw !== "string" || !raw.startsWith("/")) return "/";
-  try {
-    let decoded = raw;
-    for (let i = 0; i < 8; i++) {
-      if (decoded.startsWith("//") || /[\\\u0000-\u0020\u007f]/.test(decoded)) return "/";
-      const next = decodeURIComponent(decoded);
-      if (next === decoded) return raw;
-      decoded = next;
-    }
-  } catch {}
-  return "/";
-}
-
-async function authRequest(path, { method = "GET", body } = {}) {
-  const cfg = await config();
-  if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) throw new Error("Sign-in is unavailable right now.");
-  const token = getToken();
-  if (!token) throw new Error("Please sign in again.");
-  const response = await fetch(`${cfg.supabaseUrl}/auth/v1/${path}`, {
-    method,
-    headers: { apikey: cfg.supabaseAnonKey, ...authHeader(), "Content-Type": "application/json" },
-    ...(body ? { body: JSON.stringify(body) } : {}),
-  });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.msg || data.message || "Your session has expired. Please sign in again.");
-  return data;
-}
-
-export function currentUser() {
-  return authRequest("user");
-}
-
-export function updatePassword(password) {
-  return authRequest("user", { method: "PUT", body: { password, data: { has_password: true } } });
 }

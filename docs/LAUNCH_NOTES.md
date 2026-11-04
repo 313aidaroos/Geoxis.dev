@@ -25,7 +25,26 @@ App `geoxis`. Catalog has `geoxis.tracking.*`. Redeem answers 'not on sale' unti
 
 ## Open items
 
-- Root 'Meridian' prototype files next to `spatial-dashboard/`: keep or delete (your call).
+- Root 'Meridian' prototype files next to `spatial-dashboard/` (`index.html`, `main.js`, `aiController.js`, `mapController.js`, `streamSimulator.js`, `uiController.js`, `README-2.md`) and the unused `spatial-dashboard/src/aiController.js`: not deployed, delete when convenient (`git rm` them; nothing imports them).
+- Paste `spatial-dashboard/sql/003_revoke_anon_execute.sql` and `004_ingest_keys_entitlements.sql` in the Supabase SQL editor (2026-10-06).
+- Point `geoxis.vercel.app` at the `spatial-dashboard` Vercel project.
+
+## 2026-10-06 (Claude): build, auth, redeem and real-fleet ingest
+
+| File | Change |
+|---|---|
+| `spatial-dashboard/vite.config.js` | `pricing.html`, `set-password.html`, `auth/callback.html` added to the build (they 404ed in production, so magic links broke). |
+| `spatial-dashboard/set-password.html`, `auth/callback.html` | Sets `has_password` so the callback stops looping to set-password; redirects use clean URLs. |
+| `spatial-dashboard/pricing.html` | Sends the session token to `/api/redeem` (it always got 401). |
+| `spatial-dashboard/api/redeem.js` | Provision writes `public.entitlements`; unprovision deletes it; receipt saved after capture. |
+| `spatial-dashboard/api/positions.js`, `api/ingest-keys.js`, `lib/ingest.js` | New: tenant ingest keys and `POST /api/positions`. See `docs/INGEST.md`. |
+| `spatial-dashboard/api/assets.js` | Signed-in tenant with rows → their fleet; without rows → demo fleet flagged `demo: true`. |
+| `spatial-dashboard/src/streamSimulator.js`, `src/main.js` | The globe poller sends the session token; toasts whose fleet is shown; stale token falls back to the public feed. |
+| `spatial-dashboard/index.html`, `src/main.js`, `src/uiController.js` | Dead OpenAI key field removed from settings (Cixy runs server-side). |
+| `spatial-dashboard/api/admin/support.js` | Only `status` is patched (a `reply` field used to 400 against the table). |
+| `spatial-dashboard/sql/003_*.sql`, `004_*.sql` | Revoke anon EXECUTE on the two security-definer functions; `ingest_keys` + `entitlements` tables. |
+| `spatial-dashboard/.env.example` | Six names the code reads were missing (`APIXIS_WORLD_KEY`, `APIXIS_WORLD_API`, `APIXIS_CLIENT_ID`, `APIXIS_REDIRECT_URI`, `AI_MODEL`, `ADMIN_EMAILS`). |
+| `spatial-dashboard/test/ingest.test.mjs` | New tests for keys, position validation, entitlement expiry. |
 
 ## What changed, file by file
 

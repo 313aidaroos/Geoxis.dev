@@ -1,25 +1,29 @@
 /* Geoxis feed: same font rule as src/styles.css, then the shared feed layout mapped onto the Geoxis palette. */
 :root { color-scheme: dark; }
-body, * { font-family: 'Special Elite', monospace !important; }
 .fx-root {
   --fx-ink: #e2e8f0;
-  --fx-accent: #10b981;
-  --fx-on-accent: #020617;
-  --fx-link: #6ee7b7;
-  --fx-media-bg: #1d2130;
-  --fx-scrim: rgba(15, 17, 23, 0.8);
+  --fx-accent: #4f8cff;
+  --fx-on-accent: #ffffff;
+  --fx-link: #76a5ff;
+  --fx-media-bg: #111a33;
+  --fx-scrim: rgba(6, 11, 26, 0.82);
   --fx-avatar-radius: 50%;
   --fx-media-radius: 8px;
   --fx-gap: 14px;
   --fx-offset: 230px;
   --fx-offset-mobile: 220px;
 }
-.fx-root .gx-feed-tabs { gap: 4px; border-bottom: 1px solid #2c3245; padding-bottom: 6px; flex: 1 1 auto; }
-.fx-root .gx-feed-tab { border: 0; background: transparent; color: #94a3b8; padding: 7px 10px; border-radius: 6px; font-size: 13px; cursor: pointer; }
-.fx-root .gx-feed-tab:hover { background: #1d2130; color: #f1f5f9; }
-.fx-root .gx-feed-tab-on { color: #6ee7b7; box-shadow: inset 0 -2px #34d399; }
-.fx-root .fx-post-head { border-bottom: 1px solid #2c3245; padding-bottom: 12px; }
-.fx-root .fx-on { color: #6ee7b7 !important; border-color: rgba(52, 211, 153, 0.5) !important; }
+.fx-root .gx-feed-tabs { gap: 4px; border-bottom: 1px solid #1f2b4d; padding-bottom: 6px; flex: 1 1 auto; }
+.fx-root .gx-feed-card { padding: 18px; }
+.fx-root .gx-feed-title { font-size: 15px; font-weight: 600; color: #e6ecff; }
+.fx-root .gx-feed-alert { border: 1px solid rgba(239,68,68,.4); border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #fca5a5; }
+.fx-root .gx-feed-notice { border: 1px solid #1f2b4d; border-radius: 8px; padding: 8px 12px; font-size: 13px; color: #aab8e0; }
+.fx-root .gx-feed-row { border-bottom: 1px solid #1f2b4d; padding: 12px 0; }
+.fx-root .gx-feed-tab { border: 0; background: transparent; color: #7c8cb8; padding: 7px 10px; border-radius: 6px; font-size: 13px; cursor: pointer; }
+.fx-root .gx-feed-tab:hover { background: #111a33; color: #e6ecff; }
+.fx-root .gx-feed-tab-on { color: #fff; box-shadow: inset 0 -2px #4f8cff; }
+.fx-root .fx-post-head { border-bottom: 1px solid #1f2b4d; padding-bottom: 12px; }
+.fx-root .fx-on { color: #76a5ff !important; border-color: rgba(79, 140, 255, 0.5) !important; }
 .fx-root .fx-sheet { max-width: 560px; }
 /* Feed layout (shared). Uses ONLY the --fx-* aliases defined above, which point at this site's own
    CSS variables. No colors or fonts of its own. */

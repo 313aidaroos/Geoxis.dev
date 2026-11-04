@@ -3,24 +3,29 @@
 // pageshow, so the number updates on return from Apixis Wallet. Signed out or not linked → "Sign in with Apixis".
 import { getToken } from "./authClient.js";
 
-const BUY = "https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=" + encodeURIComponent("https://spatial-dashboard-xi.vercel.app/");
+const BUY = "https://apixis-wallet.vercel.app/buy?product=geoxis&return_url=" + encodeURIComponent("https://geoxis.apixis.dev/");
 
 function build() {
   const wrap = document.createElement("span");
-  wrap.className = "inline-flex items-center gap-2 whitespace-nowrap text-[12px]";
+  wrap.className = "wallet-pill";
   const pill = document.createElement("a");
   pill.href = BUY;
   pill.title = "Your Apixis Wallet balance · Buy Ixis";
-  pill.className = "hidden rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-emerald-300 hover:bg-emerald-500/20";
+  pill.className = "pill hidden";
   pill.textContent = "✦ — Ixis";
   const link = document.createElement("a");
-  link.className = "text-slate-400 underline hover:text-emerald-300";
+  link.className = "signin";
   link.textContent = "Sign in with Apixis";
   wrap.append(pill, link);
   return { wrap, pill, link };
 }
 
 function mount(wrap) {
+  const slot = document.querySelector("[data-wallet-pill]");
+  if (slot) {
+    slot.replaceChildren(wrap);
+    return true;
+  }
   const sidebar = document.querySelector("#sidebar > div");
   if (sidebar) {
     const row = document.createElement("div");

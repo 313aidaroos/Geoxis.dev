@@ -2,7 +2,7 @@ import { access, readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const pages = ["index.html", "login.html", "support.html", "admin.html", "pricing.html", "set-password.html", "auth/callback.html", "companies.html", "feed.html"];
+const pages = ["index.html", "login.html", "support.html", "admin.html", "pricing.html", "set-password.html", "auth/callback.html", "track.html", "fleet.html", "terms.html", "privacy.html"];
 for (const page of pages) {
   const html = await readFile(resolve("dist", page), "utf8");
   if (!["companies.html", "feed.html"].includes(page) && html.includes("cdn.tailwindcss.com")) throw new Error(`${page}: runtime Tailwind CDN`);
