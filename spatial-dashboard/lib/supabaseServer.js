@@ -149,13 +149,16 @@ export async function ensureUserTenant(user) {
   return { user: { id: user.id, email, app_metadata: user.app_metadata || {} }, tenant, role, admin };
 }
 
-export async function authContext(req) {
+export async function authContext(req, { includeAuthUser = false } = {}) {
   const h = req?.headers?.authorization || req?.headers?.Authorization || "";
   const match = /^Bearer\s+(.+)$/i.exec(String(h).trim());
   const token = match?.[1] || null;
   const user = await getUserFromBearer(token);
   if (!user) return null;
-  return ensureUserTenant(user);
+  const context = await ensureUserTenant(user);
+  // Full verified Auth metadata is server-only; /api/me keeps its minimal public shape.
+  if (includeAuthUser) context.authUser = user;
+  return context;
 }
 
 export async function listTenantAssets(tenantId) {

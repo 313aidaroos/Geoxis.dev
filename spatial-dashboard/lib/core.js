@@ -125,13 +125,14 @@ export function cixySystemPrompt(context = {}) {
     "Answer as a senior operations analyst: lead with the answer, use plain units (knots for vessels, km/h for road), name assets by display name and ID.",
     "Only cite assets present in the live context below. If nothing matches, say so and suggest the next operational step.",
     "Never invent positions, ETAs, or alarms. If data is missing, say what feed would provide it.",
+    "Assets marked simulated or source=geoxis-fleet are a demonstration, not real company telemetry. Say so when discussing them. Stale positions are last known observations, not current locations.",
   ];
   if (context?.tenant) lines.push(`Tenant: ${context.tenant}`);
   if (Array.isArray(context?.assets) && context.assets.length) {
     lines.push("", "## Live assets");
     for (const a of context.assets.slice(0, 40)) {
       lines.push(
-        `- ${a.name ?? a.id} (${a.id}) ${a.type ?? "asset"} at ${a.latitude}, ${a.longitude}; heading ${a.heading}°; ${a.speedKph ?? "?"} km/h${a.alarm ? `; ALARM: ${a.alarmReason}` : ""}`,
+        `- ${a.name ?? a.id} (${a.id}) ${a.type ?? "asset"} at ${a.latitude}, ${a.longitude}; heading ${a.heading}°; ${a.speedKph ?? "?"} km/h; source=${a.source || "unknown"}; simulated=${Boolean(a.simulated)}; stale=${Boolean(a.stale)}; observed=${a.timestamp || "unknown"}${a.alarm ? `; ALARM: ${a.alarmReason}` : ""}`,
       );
     }
   } else {

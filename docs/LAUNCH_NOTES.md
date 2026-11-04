@@ -4,7 +4,7 @@ _Updated 2026-09-25. One notes file per repo: what was changed, file by file, an
 
 ## Status
 
-Ready after keys. Plans are not on sale (`PLANS_ON_SALE=false`).
+The public globe is a demonstration. Customer telemetry ingestion and entitlement enforcement remain launch work. Plans are not on sale (`PLANS_ON_SALE=false`).
 
 ## Connect (in order)
 
@@ -61,3 +61,11 @@ Each changed backend code file also starts with a one-line `Change note (Claude,
 | `spatial-dashboard/sql/002_lock_current_asset_positions.sql` | View is `security_invoker`; browser roles revoked (closed cross-customer read). |
 
 _Changes are backend and plumbing only. Pages, design and UI are not changed except where noted as a build or lint fix with no visual change._
+
+## 2026-10-05 readiness fixes (Codex)
+
+Fixed Cesium basemap configuration with a packaged fallback; built pricing, auth callback, and password setup pages; compiled dashboard Tailwind locally; labelled demo and stale data; sent bearer auth with tenant fleet polling; preserved verified metadata for world onboarding; made callback/password pages use the app session; removed unused OpenAI key settings; escaped feed/agent text; and added `npm run check` plus regression coverage.
+
+Validation: production build, 27 tests, shipped-page and API-import checks. Browser preview confirmed satellite imagery, live/demo source labels, asset selection, settings, pricing availability messaging, and responsive layout. Auth/World regressions use stubbed services; no real password change, signup, or purchase was performed.
+
+Remaining: configure/verify production service keys, rehearse real sign-in/onboarding with a test account, integrate customer telemetry, and implement/enforce paid entitlements before opening sales.

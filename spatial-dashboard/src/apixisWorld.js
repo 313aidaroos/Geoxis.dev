@@ -31,7 +31,9 @@ export function showWelcomeCard(data) {
   if (sessionStorage.getItem("world_welcome_shown")) return;
   sessionStorage.setItem("world_welcome_shown", "1");
 
-  const agentName = data.agentName || "your agent";
+  const escapedName = document.createElement("span");
+  escapedName.textContent = data.agentName || "your agent";
+  const agentName = escapedName.innerHTML;
   const isReady = data.status === "ready";
 
   // Create welcome card matching Geoxis theme
@@ -56,7 +58,7 @@ export function showWelcomeCard(data) {
   const title = isReady ? "Your agent is ready" : "Welcome to Apixis";
   const message = isReady
     ? `<strong style="color: #10b981;">${agentName}</strong> is waiting for you in the Apixis world.`
-    : `Your avatar agent is being created. Enter the Apixis world to meet <strong style="color: #10b981;">${agentName}</strong>.`;
+    : `Enter the Apixis world to create or meet <strong style="color: #10b981;">${agentName}</strong>.`;
 
   card.innerHTML = `
     <div style="text-align: center;">

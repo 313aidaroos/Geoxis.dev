@@ -85,12 +85,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const ctx = await authContext(req).catch(() => null);
+    const ctx = await authContext(req, { includeAuthUser: true }).catch(() => null);
     if (!ctx) {
       return sendJson(res, 401, { error: "not_authenticated" });
     }
 
-    const user = ctx.user;
+    const user = ctx.authUser;
     const cfg = envConfig();
 
     // Check if already provisioned
@@ -150,9 +150,12 @@ export default async function handler(req, res) {
         headers: { apikey: cfg.serviceKey, Authorization: `Bearer ${cfg.serviceKey}`, "Content-Type": "application/json" },
         body: JSON.stringify({ app_metadata: next }),
       }).catch((e) => ({ ok: false, status: 0, error: e }));
-      if (!saved.ok) console.error("[world/provision] metadata save failed:", saved.status);
+      if (!saved.ok) {
+        console.error("[world/provision] metadata save failed:", saved.status);
+        return sendJson(res, 503, { ok: false, error: "metadata_save_failed" });
+      }
     } else {
-      console.error("[world/provision] metadata save skipped: supabase_not_configured");
+      return sendJson(res, 503, { ok: false, error: "supabase_not_configured" });
     }
 
     return sendJson(res, 200, {
