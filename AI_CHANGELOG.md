@@ -127,3 +127,7 @@ Entry format:
 - Changed: canonical site URL is now `https://geoxis.apixis.dev` everywhere the code and pages name the site (meta/OG/canonical tags, robots, sitemap, brand.json domain, `/companies` card, INGEST example, the Apixis login `siteUrl()` fallback and the wallet pill return URL). The Vercel alias `spatial-dashboard-xi.vercel.app` stays as a fallback.
 - Why: Awad: "the site now is Geoxis.apixis.dev".
 - Needs Awad / hub: set `APP_URL=https://geoxis.apixis.dev` in Vercel, and add `https://geoxis.apixis.dev/auth/apixis/callback` to the Wallet's `geoxis` client `redirect_uris` (today only the spatial-dashboard-xi URLs are registered, see NOTES/GROK.md 2026-10-06), otherwise Sign in with Apixis on the new domain is refused by the Wallet. Undo: `git revert` this commit.
+
+## 2026-11-05 — Grok (Geoxis Lead via Developer Bot)
+- Changed: `spatial-dashboard/lib/core.js` Geoxis Cixy product role — added the two owed family lines word for word (Nexxis→Ominixis; every Ixis site takes card AND Ixis with on-site Apixis Wallet top-up, or coming soon), plus light Geoxis status (planned prices with coming-soon actions; Ixis redemption closed). `spatial-dashboard/test/core.test.mjs` pins those lines. `NOTES/GROK.md` entry. No SVG. No other persona or UI change. Overlapping Cixy requests already prevented on main in `spatial-dashboard/src/globe/cixy.js` (`busy` guard); left alone.
+- Why: Hub brief `cixy-brain/briefs/2026-11-05.md` light Geoxis apply + still-owed 2026-10-19 family lines; Developer Bot authorized persona/knowledge only.
