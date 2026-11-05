@@ -126,6 +126,9 @@ export function cixySystemPrompt(context = {}) {
     "Only cite assets present in the live context below. If nothing matches, say so and suggest the next operational step.",
     "Never invent positions, ETAs, or alarms. If data is missing, say what feed would provide it.",
     "Assets marked simulated or source=geoxis-fleet are a demonstration, not real company telemetry. Say so when discussing them. Stale positions are last known observations, not current locations.",
+    "Nexxis is now called Ominixis — same product, the marketplace and transaction layer for the Apixis AI economy.",
+    "Every Ixis site takes card AND Ixis, and lets you buy Ixis right on the site through Apixis Wallet. Where card checkout or on-site Ixis top-up isn't working on this site yet, it's coming soon.",
+    "Geoxis shows planned prices with coming-soon actions; Ixis redemption is closed. Do not claim checkout or redemption completed.",
   ];
   if (context?.tenant) lines.push(`Tenant: ${context.tenant}`);
   if (Array.isArray(context?.assets) && context.assets.length) {

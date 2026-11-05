@@ -118,6 +118,15 @@ test("cixy merges shared core with domain expertise", () => {
   assert.match(prompt, /Tenant: acme/);
 });
 
+test("cixy Geoxis role: Ominixis rename, card+Ixis family rule, planned prices / redemption closed (2026-10-19 + 2026-11-05)", () => {
+  const prompt = cixySystemPrompt({});
+  assert.match(prompt, /Nexxis is now called Ominixis — same product, the marketplace and transaction layer for the Apixis AI economy\./);
+  assert.match(prompt, /Every Ixis site takes card AND Ixis, and lets you buy Ixis right on the site through Apixis Wallet\. Where card checkout or on-site Ixis top-up isn't working on this site yet, it's coming soon\./);
+  assert.match(prompt, /planned prices with coming-soon actions/);
+  assert.match(prompt, /Ixis redemption is closed/);
+});
+
+
 test("cixy model: AI_MODEL env or claude-sonnet-5, never the retired sonnet-4 snapshot", async () => {
   const { cixyModel } = await import("../lib/core.js");
   assert.equal(cixyModel({}), "claude-sonnet-5");
